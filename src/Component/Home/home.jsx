@@ -6,7 +6,7 @@ const HomePage =()=>{
     const { Title ,Text } = Typography;
     return(
         
-            <div style={{margin:"80px"}}> 
+            <div style={{margin:"80px "}}> 
                 <Flex justify ="center" vertical gap={70}  >
                     <div style={{textAlign:"center"}}>
                         <div><Title level={2} >Kids Life Coaching <br /> That Educates, Motivates, And Inspires</Title></div>
@@ -16,11 +16,11 @@ const HomePage =()=>{
                             theme={{
                                 components: {
                                     Button: {
-                                        defaultColor:"#EAE2B7",
-                                        defaultBg :"#003049",
+                                        defaultColor:"#000",
+                                        defaultBg :"#F77F00",
                                         defaultHoverColor:"#ffffff",
-                                        defaultHoverBg:"#D62828",
-                                        defaultHoverBorderColor:"#D62828",
+                                        defaultHoverBg:"#003049",
+                                        defaultHoverBorderColor:"#003049",
                                         }
                                     }
                             }
@@ -29,7 +29,7 @@ const HomePage =()=>{
                     </div>
                     <div>
                         <Flex  align="center" justify="center">
-                            <div> <Image width={300} src="src/assets/unnamed.webp" alt="" /></div>
+                            <div> <Image preview={{visible:false,movable:false,mask:false }} width={300} src="src/assets/unnamed.webp" alt="" /></div>
                             <Flex vertical align="center" justify="center" gap={10} >
                                 <div style={{width:"400px", textAlignLast:"center"}} >
                                     <Text >Our global network of certified Play Based Coaches are on hand to guide your child to become the leader of their own life and reach for 
@@ -57,7 +57,7 @@ const HomePage =()=>{
                                 </div>
                                 </Flex>
                             </Flex>
-                            <div><Image width={300} src="src/assets/unnamed2.webp" alt="" /></div>
+                            <div><Image preview={{visible:false,movable:false,mask:false }} width={300} src="src/assets/unnamed2.webp" alt="" /></div>
                         </Flex>
                     </div>
                 </Flex>

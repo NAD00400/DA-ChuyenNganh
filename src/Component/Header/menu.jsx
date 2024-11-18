@@ -50,7 +50,7 @@ return(
             Menu: {
                 itemColor:"#22223bff",
                 itemHoverColor:"#4a4e69ff",
-                horizontalItemSelectedColor:"#4a4e69ff",
+                horizontalItemSelectedColor:"#D62828",
                 activeBarWidth:"124213"
             },
             token:{

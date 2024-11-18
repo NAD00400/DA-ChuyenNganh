@@ -1,6 +1,7 @@
 import { Button, ConfigProvider } from "antd"
 import { LoginOutlined } from '@ant-design/icons';
 import { MenuHeader } from "./menu"
+import { Link } from "react-router-dom";
 
 
 const Header =()=>{
@@ -31,7 +32,7 @@ const Header =()=>{
                         },
                     }}
                 >
-                <Button  variant="filled" icon={<LoginOutlined />} >login</Button>
+                <Button  variant="filled" icon={<LoginOutlined />} ><Link to="/login">login</Link> </Button>
                 </ConfigProvider>
             </div>
     </div>)

@@ -1,10 +1,10 @@
-import { FacebookOutlined, HomeOutlined, LoginOutlined, MailOutlined, PhoneOutlined, TwitterOutlined, YoutubeOutlined } from "@ant-design/icons"
+import { HomeOutlined, LoginOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons"
 import { Button, ConfigProvider, Input, Typography } from "antd"
 
 const {Text,Title}= Typography
 const Footer =()=>{
     return(
-    <div className="footer">
+    <div className="footer" style={{marginTop:"20px"}}>
             <div style={{display:"flex",flexDirection:"row", margin:"20px 180px" ,columnGap:"40px",height:"300px"} }>
                 <div style={{display:"flex",flex:1,flexDirection:"column",maxWidth:"300"}}>
                     <div><Title level={5}>CÔNG TY CỔ PHẦN ABC</Title></div>
@@ -68,8 +68,6 @@ const Footer =()=>{
                     <Button  variant="filled" icon={<LoginOutlined />} >Gửi</Button>
                     </ConfigProvider>
                     </div>
-                    
-                    
                 </div>
             </div>
     </div>)

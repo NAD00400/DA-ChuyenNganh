@@ -8,6 +8,7 @@ import {App} from './App.jsx'
 import { HomePage } from './component/Home/home.jsx';
 import ErrorPage from './page/errorPage.jsx';
 import { NewI4 } from './Component/New/new.jsx';
+import { LoginPage } from './page/loginPage.jsx';
 
 
 const router = createBrowserRouter([
@@ -26,15 +27,11 @@ const router = createBrowserRouter([
       },
     ] 
   },
-  // {
-  //   path: "/login",
-  //   element: <LoginPage/>
-  // },
-  // {
-  //   path: "/register",
-  //   element: <><PrivateRoute><RegisterPage/></PrivateRoute>
-  //   </>
-  // },
+  {
+    path: "/login",
+    element: <LoginPage/>
+  },
+
 ]);
 createRoot(document.getElementById('root')).render(
     <RouterProvider router ={router}/>
