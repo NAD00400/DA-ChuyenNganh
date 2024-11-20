@@ -5,10 +5,12 @@ import {
 } from "react-router-dom";
 
 import {App} from './App.jsx'
-import { HomePage } from './component/Home/home.jsx';
+
 import ErrorPage from './page/errorPage.jsx';
-import { NewI4 } from './Component/New/new.jsx';
+import { Event} from './Component/Event/Event.jsx';
 import { LoginPage } from './page/loginPage.jsx';
+import { HomePage } from './Component/Home/home.jsx';
+import { About } from './Component/About/About.jsx';
 
 
 const router = createBrowserRouter([
@@ -23,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path:"/new",
-        element: <NewI4/>
+        element: <Event/>
+      },
+      {
+        path:"/about",
+        element: <About/>
       },
     ] 
   },
