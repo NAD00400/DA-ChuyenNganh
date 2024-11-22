@@ -1,59 +1,38 @@
-
-
-import { AimOutlined, DingtalkOutlined, UserOutlined } from "@ant-design/icons";
+import { ContainerOutlined, DesktopOutlined,  PieChartOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
-const MenuAdmin = () => {
-  const location = useLocation();
-  useEffect(() => {
-    if (location && location.pathname) {
-      const allRoutes = ["user", "book"];
-      const currentRoute = allRoutes.find(
-        (item) => `/${item}` === location.pathname
-      );
-      if (currentRoute) {
-        setCurrent(currentRoute);
-      } else {
-        // setCurrent("home");
-      }
-    }
-  }, [location]);
-
-  const [current, setCurrent] = useState();
-  const items = [
-    {
-      label: <Link to="/eventmanagement">Event</Link>,
-      key: "new",
-      icon:<DingtalkOutlined />
-    },
-    {
-      label: <Link to="/programsmanagement">Programms</Link>,
-      key: "progprams",
-      icon:<AimOutlined />
-    },
-    {
-        label: <Link to="/usermanagement">User</Link>,
-        key: "Program",
-        icon:<UserOutlined />
-    },
-  ];
+const items = [
+  {
+    key: '1',
+    icon: <PieChartOutlined />,
+    label: <Link to={"/admin"}>Programs</Link>,
+  },
+  {
+    key: '2',
+    icon: <DesktopOutlined />,
+    label: <Link to={"eventManagement"}> Event</Link>,
+  },
+  {
+    key: '3',
+    icon: <ContainerOutlined />,
+    label:<Link to={"userManagement"}> User</Link>,
+  },
+];
+export const MenuAdmin =()=>{
   const onClick = (e) => {
-    setCurrent(e.key);
+    console.log('click ', e);
   };
-  return (
-
-          <Menu
-          mode="inline"
-          defaultSelectedKeys={['231']}
-          onClick={onClick}
-          items={items}
-          theme="dark"
-          />
-
-  );
-};
-export {MenuAdmin };
+    return(<>
+    <Menu
+      onClick={onClick}
+      style={{
+        width:"15%",
+        height:"100vh"
+      }}
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      mode="inline"
+      items={items}
+    /></>)
+}
