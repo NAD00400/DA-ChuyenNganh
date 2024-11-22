@@ -1,9 +1,11 @@
 import {
   Carousel,
+  Col,
   ConfigProvider,
   Divider,
   Flex,
   Image,
+  Row,
   Typography,
 } from "antd";
 
@@ -17,6 +19,7 @@ const contentStyle = {
   textAlign: "center",
   background: "#003049",
 };
+// trong trang event này có 1 cái bug  about layer làm xong đồ án tìm hiểu lại ỹ phần đó
 const About = () => {
   return (
     <>
@@ -71,12 +74,12 @@ const About = () => {
           </Text>
         </Flex>
       </Flex>
-      <Flex justify="center" align="center" gap={20} style={{ margin: "30px" }}>
-        <div
+      <Row justify={"center"} align={"middle"} gap={20} style={{ margin: "30px" }}>
+        <Col xs={22}sm={22} md={12}
           style={{
             zIndex: "2",
             backgroundColor: "#EFEFEF",
-            boxShadow: "10px 10px 5px #aaaaaa",
+            boxShadow:" rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
             borderRadius: "10px",
             width: "400px",
             padding: "40px",
@@ -84,7 +87,6 @@ const About = () => {
             position: "relative",
             left: "40px",
           }}>
-          {/* //display:"block", position:"absolute" */}
           <Flex vertical gap={10}>
             <ConfigProvider
               theme={{
@@ -153,33 +155,36 @@ const About = () => {
               <Divider />
             </ConfigProvider>
           </Flex>
-        </div>
-        <Flex vertical gap={20}>
-          <Image
-            preview={{ visible: false, movable: false, mask: false }}
-            witdh={650}
-            style={{
-              borderRadius: "10px",
-              zIndex: "1",
-              boxShadow: "10px 10px 5px #aaaaaa",
-              position: "relative",
-              left: "40px",
-            }}
-            src="src/assets/11.webp"></Image>
-          <Image
-            preview={{ visible: false, movable: false, mask: false }}
-            width={300}
-            style={{
-              borderRadius: "24px",
-              zIndex: "1",
-              boxShadow: "10px 10px 5px #aaaaaa",
-              position: "relative",
-              left: "40px",
-            }}
-            src="src/assets/11-1.webp"
-            alt=""></Image>
-        </Flex>
-      </Flex>
+        </Col>
+        <Col xs={22}sm={22}  md={12}>
+          <Flex vertical gap={20}>
+            <Image
+              preview={{ visible: false, movable: false, mask: false }}
+              witdh={650}
+              style={{
+                borderRadius: "10px",
+                zIndex: "1",
+                
+                boxShadow:" rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+                position: "relative",
+                left: "0px",
+              }}
+              src="src/assets/11.webp"></Image>
+            <Image
+              preview={{ visible: false, movable: false, mask: false }}
+              width={300}
+              style={{
+                borderRadius: "24px",
+                zIndex: "1",
+                boxShadow:" rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+                position: "relative",
+                left: "0px",
+              }}
+              src="src/assets/11-1.webp"
+              alt=""></Image>
+          </Flex>
+        </Col>
+      </Row>
     </>
   );
 };

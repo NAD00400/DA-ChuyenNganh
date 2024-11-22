@@ -7,12 +7,12 @@ import { Flex } from "antd"
 
 const App=()=>{
   
-  return(<>
-       <Flex vertical justify="space-between">
+  return(
+       <Flex vertical justify="space-between" style ={{witdh:"100%",}}>
           <Header/>
           <Outlet/>
           <Footer/>
        </Flex>
-  </>)
+  )
 }
 export {App}

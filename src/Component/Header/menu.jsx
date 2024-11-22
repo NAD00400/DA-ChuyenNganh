@@ -1,4 +1,4 @@
-import { ConfigProvider, Menu, Typography } from "antd";
+import { Col, ConfigProvider, Menu, Row, Typography } from "antd";
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -61,25 +61,29 @@ const MenuHeader = () => {
     setCurrent(e.key);
   };
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Menu: {
-            itemColor: "#22223bff",
-            itemHoverColor: "#4a4e69ff",
-            horizontalItemSelectedColor: "#D62828",
-            activeBarWidth: "124213",
-          },
-        },
-      }}>
-      <Menu
-        style={{ minWidth: "329px" }}
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={items}
-      />
-    </ConfigProvider>
+    <Row>
+     <Col md={10}>
+        <ConfigProvider
+          theme={{
+            components: {
+              Menu: {
+                itemColor: "#22223bff",
+                itemHoverColor: "#4a4e69ff",
+                horizontalItemSelectedColor: "#D62828",
+                activeBarWidth: "124213",
+              },
+            },
+          }}>
+          <Menu
+            style={{ minWidth: "329px" }}
+            onClick={onClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+            items={items}
+          />
+        </ConfigProvider>
+     </Col>
+    </Row>
   );
 };
 export { MenuHeader };
