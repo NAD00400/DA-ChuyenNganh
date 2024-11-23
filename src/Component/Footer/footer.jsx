@@ -9,7 +9,7 @@ import { Button, Col, ConfigProvider, Flex, Input, Row, Typography } from "antd"
 const { Text, Title } = Typography;
 const Footer = () => {
   return (
-    <Row  justify="space-around" wrap style={{marginTop:"60px"}}>
+    <Row  justify="space-around" wrap style={{padding:"60px 40px  20px" }}>
       
       <Col xs={6}md={6} >
         <Flex vertical gap={10}>

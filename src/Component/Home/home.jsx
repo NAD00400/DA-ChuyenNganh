@@ -4,7 +4,7 @@ const HomePage = () => {
   const { Title, Text } = Typography;
   return (
     
-      <Flex justify="center" vertical gap={70}>
+      <Flex justify="center" vertical gap={70} style={{paddingTop:"60px"}}>
         <Row align={"middle"} justify={"center"} style={{textAlign:"center"}}>
           <Col xs={22} md={16} >
             <Title level={2}>
@@ -20,7 +20,7 @@ const HomePage = () => {
                   components: {
                     Button: {
                       defaultColor: "#000",
-                      defaultBg: "#F77F00",
+                      defaultBg: "#FCBF49",
                       defaultHoverColor: "#ffffff",
                       defaultHoverBg: "#003049",
                       defaultHoverBorderColor: "#003049",
@@ -80,25 +80,24 @@ const HomePage = () => {
         
         </Row>
         <Divider plain> Popular Study Programs</Divider>
-        <Row justify={"space-around"} gutter={[16, 16]}>
-          
-        <Col xs={24} sm={11} lg={5} xl={5}>
+        <Row wrap gutter={[16, 16]} style={{margin:"0 120px"}}>
+        <Col xs={12} md={6}>
           <Card hoverable style={{ width:"maxWidth" }}cover={<img alt="example" src="src/assets/unnamed (5).webp" />}>
             <Card.Meta title={<Typography.Title level={5}>Lorem ipsum dolor</Typography.Title>} description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis libero dolorum voluptatibus quisquam itaque mollitia esse"/>
           </Card>
         </Col>
-        <Col xs={24} sm={11} lg={5} xl={5}>
-          <Card hoverable style={{ width: "maxWidth" }}cover={<img alt="example" src="src/assets/unnamed (5).webp" />}>
+        <Col xs={12} md={6}>
+          <Card hoverable style={{ width: "maxWidth" }}cover={<img alt="example" src="src/assets/ИТ Рекрутинг-5.png" />}>
             <Card.Meta title={<Typography.Title level={5}>Lorem ipsum dolor</Typography.Title>} description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis libero dolorum voluptatibus quisquam itaque mollitia esse"/>
           </Card>
         </Col>
-        <Col xs={24} sm={11} lg={5} xl={5}>
-          <Card hoverable style={{ width: "maxWidth" }}cover={<img alt="example" src="src/assets/unnamed (5).webp" />}>
+        <Col xs={12} md={6}>
+          <Card hoverable style={{ width: "maxWidth" }}cover={<img alt="example" src="src/assets/UX_UIpng.png" />}>
             <Card.Meta title={<Typography.Title level={5}>Lorem ipsum dolor</Typography.Title>} description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis libero dolorum voluptatibus quisquam itaque mollitia esse"/>
           </Card>
         </Col>
-        <Col xs={24} sm={11} lg={5} xl={5}>
-          <Card hoverable style={{ width: "maxWidth" }}cover={<img alt="example" src="src/assets/unnamed (5).webp" />}>
+        <Col xs={12} md={6}>
+          <Card hoverable style={{ width: "maxWidth" }}cover={<img alt="example" src="src/assets/marketing.png" />}>
             <Card.Meta title={<Typography.Title level={5}>Lorem ipsum dolor</Typography.Title>} description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis libero dolorum voluptatibus quisquam itaque mollitia esse"/>
           </Card>
         </Col>

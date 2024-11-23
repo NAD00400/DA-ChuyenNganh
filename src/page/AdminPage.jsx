@@ -11,7 +11,7 @@ export const AdminPage =()=> {
     return (
         <Flex   style ={{witdh:"100%",}}>
         <MenuAdmin/>
-        <Outlet></Outlet>
+    
         <Outlet/>
 
      </Flex>

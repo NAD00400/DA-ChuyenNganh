@@ -18,6 +18,7 @@ import { AdminPage } from './page/AdminPage.jsx';
 import { UserManagement } from './Component/Admin/UserManagement.jsx';
 import { EventManagement } from './Component/Admin/EventManagement.jsx';
 import { ProgramsManagement } from './Component/Admin/ProgramsManagement.jsx';
+import { Programs } from './Component/Program/Programs.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />
+      },
+      {
+        path: "/programs",
+        element: <Programs />
       },
       {
         path: "/login",

@@ -1,5 +1,5 @@
-import { LoginOutlined } from '@ant-design/icons';
-import { Button, Col, ConfigProvider, Image, Row } from "antd";
+import { LoginOutlined,  } from '@ant-design/icons';
+import {Button, Col, ConfigProvider, Flex, Image, Row } from "antd";
 import { Link } from "react-router-dom";
 import { MenuHeader } from "./menu";
 // import { useContext } from 'react';
@@ -10,7 +10,7 @@ const Header =()=>{
     
     // const data = useContext(AuthContext)
 
-    return(
+    return(<Flex vertical>
         <Row justify="space-around" align="middle" wrap="false"
         style={{position: 'sticky',top: 0,zIndex: 1, backgroundColor:"#fff" }}>
             <Col xs={0} md={2}> <Image  src="src/assets/logo.png" preview={{visible:false,movable:false,mask:false }} width={80}></Image></Col>
@@ -37,8 +37,13 @@ const Header =()=>{
                     >
                     <Button  variant="filled" icon={<LoginOutlined />} ><Link to="/login">login</Link> </Button>
                 </ConfigProvider>
-            </Col>
+            </Col >
+            
         </Row>
+
+            
+
+        </Flex>
     )
 }
 

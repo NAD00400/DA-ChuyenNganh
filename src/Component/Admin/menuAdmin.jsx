@@ -27,7 +27,7 @@ export const MenuAdmin =()=>{
     <Menu
       onClick={onClick}
       style={{
-        width:"15%",
+        width:"20%",
         height:"100vh"
       }}
       defaultSelectedKeys={['1']}
