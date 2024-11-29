@@ -1,4 +1,4 @@
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -11,14 +11,15 @@ import { Event } from './Component/Event/Event.jsx';
 import { HomePage } from './Component/Home/home.jsx';
 import ErrorPage from './page/errorPage.jsx';
 import { LoginPage } from './page/loginPage.jsx';
-// import { AuthWrapper } from './Component/authentication/auth.context.jsx';
 
-import './style/global.css';
-import { AdminPage } from './page/AdminPage.jsx';
-import { UserManagement } from './Component/Admin/UserManagement.jsx';
+
 import { EventManagement } from './Component/Admin/EventManagement.jsx';
 import { ProgramsManagement } from './Component/Admin/ProgramsManagement.jsx';
+import { UserManagement } from './Component/Admin/UserManagement.jsx';
 import { Programs } from './Component/Program/Programs.jsx';
+import { AuthWrapper } from './Component/context/auth.context.jsx';
+import { AdminPage } from './page/AdminPage.jsx';
+import './style/global.css';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,33 +42,36 @@ const router = createBrowserRouter([
         path: "/programs",
         element: <Programs />
       },
-      {
-        path: "/login",
-        element: <LoginPage />
-      },
+      
     ]
   },{
+    path: "/login",
+    element: <LoginPage />
+  }
+  ,{
     path: "/admin",
     element: <AdminPage />,
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <ProgramsManagement />
+        element: <ProgramsManagement/>
       },
       {
         path: "userManagement",
-        element: <UserManagement />
+        element: <UserManagement/>
       },
       {
         path: "eventManagement",
-        element: <EventManagement />
+        element: <EventManagement/>
       },
       
     ]
   }
 ]);
 
-createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <AuthWrapper>
+    <RouterProvider router={router}/>,
+  </AuthWrapper>
 );

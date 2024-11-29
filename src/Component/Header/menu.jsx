@@ -35,26 +35,8 @@ const MenuHeader = () => {
       key: "progprams",
     },
     {
-      label: "About Us",
+      label: <Link to={"/about"}>About Us</Link>,
       key: "about",
-      children: [
-        {
-          type: "group",
-          label: (
-            <Link to={"/about"}>
-              <Text>About Us</Text>
-            </Link>
-          ),
-        },
-        {
-          type: "group",
-          label: (
-            <Link to={"/"}>
-              <Text>Recruitment</Text>{" "}
-            </Link>
-          ),
-        },
-      ],
     },
   ];
   const onClick = (e) => {

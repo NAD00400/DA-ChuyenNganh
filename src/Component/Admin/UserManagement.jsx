@@ -1,94 +1,40 @@
-import { Button, ConfigProvider, Flex, Space, Table, Tag } from 'antd';
+import { Flex} from 'antd';
+import { UserTable } from './UserManagement/UserTable';
+import { useEffect, useState } from 'react';
+import { fetchAllUserAPI } from '../../services/api.service';
+import { UserCreate } from './UserManagement/userCreater';
 
-const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+
 const UserManagement=()=>{
+  const [dataUsers, setDataUsers] = useState([]);
+    const [current ,setCurrent]= useState(1);
+    const [pageSize, setPageSize]=useState(5);
+    const [total,setTotal]=useState(1);
+
+    useEffect(() => {
+        loadUser();
+    },[current]);
+
+    const loadUser = async () => {
+        const res = await fetchAllUserAPI(current, pageSize)
+        if (res.data){
+            setDataUsers(res.data.result)
+            setTotal(res.data.meta.total)
+        }
+        // console.log("check res fetchAllUser",res);
+    }
     return(
     <Flex vertical style={{width:"100%"}}>
-        <ConfigProvider
-                theme={{
-                  components: {
-                    Button: {
-                      defaultColor: "#fff",
-                      defaultBg: "#70161E",
-                      defaultHoverColor: "#ffff",
-                      defaultHoverBg: "#000",
-                      defaultHoverBorderColor: "#000",
-                    },
-                  },
-                }}>
-            <Button style={{margin:"5px 0px"}} >New User</Button>
-        </ConfigProvider>
-        <Table columns={columns} dataSource={data} />
+        <UserCreate loadUser={loadUser} /> 
+        <UserTable 
+        current={current}
+        setCurrent={setCurrent}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
+        total={total}
+        dataUsers={dataUsers}
+        loadUser={loadUser}
+        ></UserTable>
         </Flex>
     )
 }

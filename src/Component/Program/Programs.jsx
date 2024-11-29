@@ -1,16 +1,6 @@
-import {
-  Breadcrumb,
-  Button,
-  Card,
-  Checkbox,
-  Col,
-  ConfigProvider,
-  Flex,
-  Form,
-  Input,
-  Row,
-  Typography,
+import {Breadcrumb,Button,Card,Checkbox,Col,ConfigProvider,Flex,Form,Input,Row,Typography,
 } from "antd";
+
 import { Link, useLocation } from "react-router-dom";
 const { Text, Title } = Typography;
 export const Programs = () => {
@@ -28,7 +18,7 @@ export const Programs = () => {
         <Breadcrumb style={{ margin: "0 0 16px 0" }}>/{items}</Breadcrumb>
 
         <Title level={3}>Our Study Programs</Title>
-
+        
         <Row gutter={[16, 16]} wrap>
           <Col xs={12} md={6}>
             <Card

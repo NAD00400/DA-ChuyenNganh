@@ -1,6 +1,7 @@
 import { Button, Card, Col, ConfigProvider, Divider, Flex, Image, Row, Typography } from "antd";
 
 const HomePage = () => {
+  
   const { Title, Text } = Typography;
   return (
     
