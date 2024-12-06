@@ -1,34 +1,32 @@
-import {
-  Button,
-  Checkbox,
-  Col,
-  ConfigProvider,
-  Flex,
-  Form,
-  Image,
-  Input,
-  message,
-  Row,
-} from "antd";
-import { useContext, useState } from "react";
+import { Button, Col, ConfigProvider, Flex, Form, Image, Input, message, Row } from "antd";
+
 import { Link, useNavigate } from "react-router-dom";
-import { loginAPI } from "../services/api.service";
-import { AuthContext } from "../Component/context/auth.context";
+
+import { getAccountAPI, loginAPI } from "../services/api.service";
+import { useState } from "react";
 
 const LoginPage = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate({});
   const [loading, setLoading] = useState();
-  const { setUser } = useContext(AuthContext);
+
 
   const onFinish = async (value) => {
     setLoading(true);
-    const res = await loginAPI(value.username, value.password);
-    if (res.data) {
+    const res = await loginAPI(value.email, value.password);
+    const userData = await getAccountAPI();
+
+    if (userData){
       message.success("đăng nhập thành công ");
       localStorage.setItem("access_token", res.data.access_token);
-      setUser(res.data.user);
+      setUser(userData.data);
+      console.log("check user",user);
+      if(userData.data.role_id==1){
+        navigate("/admin");
+      }else{
       navigate("/");
+      }
     } else {
       message.error("xẩy ra lỗi");
     }
@@ -74,7 +72,7 @@ const LoginPage = () => {
           autoComplete="off">
           <Form.Item
             label="Email"
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
@@ -94,9 +92,6 @@ const LoginPage = () => {
               },
             ]}>
             <Input.Password />
-          </Form.Item>
-          <Form.Item name="remember" valuePropName="checked" label={null}>
-            <Checkbox>Remember me</Checkbox>
           </Form.Item>
           <Form.Item label={null}>
             <ConfigProvider
@@ -120,6 +115,7 @@ const LoginPage = () => {
                   }}>
                   Login
                 </Button>
+                
                 <Link to="/">Quay lại</Link>
               </Flex>
             </ConfigProvider>

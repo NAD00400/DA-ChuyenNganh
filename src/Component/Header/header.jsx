@@ -19,88 +19,55 @@ const Header =()=>{
         if (res.data) {
             localStorage.removeItem("access_token");
             setUser({
+                id: "",
                 email: "",
-                phone: "",
-                fullName: "",
-                role: "",
-                id: ""
+                role_id: "",
+                student:""
             })
             message.success("Logout thành công.");
             navigate("/");
         }
     }
- // const data = useContext(AuthContext)
+
     return(<>
         <Row justify="space-around" align="middle" wrap="false"
         style={{position: 'sticky',top: 0,zIndex: 1, backgroundColor:"#fff" }}>
             <Col xs={0} md={2}> <Image  src="src/assets/logo.png" preview={{visible:false,movable:false,mask:false }} width={80}></Image></Col>
             <Col > <MenuHeader /></Col>
-            {!user.id ?(
-                <Col xs={0} md={2}>
+            <Col xs={0} md={2}>
+                {user.id ? (
                     <ConfigProvider     
-                            theme={{
-                                components: {
-                                Button: {
-                                    defaultColor:"#EAE2B7",
-                                    defaultBg :"#003049",
-                                    defaultHoverColor:"#000000",
-                                    defaultHoverBorderColor:"#000000",
-                                    defaultShadow:"0 2px 0 rgba(0, 0, 0, 0.02)",
-                                    borderRadius :30,
-                                    paddingInline:15,
-                                
-                                    },
-                                token: {
-                                    
-                                    }
+                        theme={{
+                            components: {
+                            Button: {
+                                defaultColor:"#EAE2B7",
+                                defaultBg :"#003049",
+                                defaultHoverColor:"#000000",
+                                defaultHoverBorderColor:"#000000",
+                                defaultShadow:"0 2px 0 rgba(0, 0, 0, 0.02)",
+                                borderRadius :30,
+                                paddingInline:15,
                                 },
-                            }}
-                        >
-                        <Button  variant="filled" icon={<LoginOutlined />} ><Link to="/login">login</Link> </Button>
-                    </ConfigProvider>
-                </Col > 
-            ):(
-        
-                <Col xs={0} md={2}>
-                    <Dropdown 
-                        menu={{
-                            items: [
-                                {
-                                    key: 'logOut',
-                                    label: (
-                                        <span onClick={() => handleLogout()}>
-                                            <ConfigProvider
-                                            theme={{
-                                                token: {
-                                                    colorText:"#D62828" 
-                                                },
-                                            }}
-                                            ><Text>Log Out</Text>
-                                            </ConfigProvider>
-                                        </span>
-                                    ),
-                                    icon: <SmileOutlined />,
+                            token: {
                                 }
-                            ],
+                            },
                         }}
-                    
-                        placement="bottomRight"
                     >
-                        <a onClick={(e) => e.preventDefault()}>
-                            <ConfigProvider
-                            theme={{
-                                token: {
-                                    colorText:"#D62828"
-                                },
-                            }}
-                            ><Text>Hi, {user.fullName} <DownOutlined/></Text>
-                            </ConfigProvider>
-                        </a>
-                    </Dropdown>
-
-                </Col>
-            )}
-        </Row>
+                    <Button  variant="filled" icon={<LoginOutlined />} onClick={()=>{navigate("/login")}}>login</Button>
+                    </ConfigProvider>
+                    ) : (
+                    <Button 
+                    variant="filled" 
+                    icon={<LoginOutlined/>} 
+                    onClick={handleLogout}
+                    >
+                    Login
+                    </Button>
+                    )}
+               
+            </Col > 
+            
+            </Row>
         </>
     )
 }

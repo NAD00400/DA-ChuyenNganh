@@ -102,7 +102,7 @@ const columns = [
 
     },
   ];
-  const EventManagement=()=>{
+  const EventMm=()=>{
     return(  <>
 
     <Flex vertical style={{width:"100%"}}>
@@ -125,4 +125,4 @@ const columns = [
     </>)
 }
 
-export {EventManagement}
+export {EventMm}

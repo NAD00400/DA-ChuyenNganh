@@ -5,18 +5,24 @@ import { Link } from "react-router-dom";
 const items = [
   {
     key: '1',
-    icon: <PieChartOutlined />,
-    label: <Link to={"/admin"}>Programs</Link>,
+    // icon: <ContainerOutlined />,
+    label:<Link to={"user-Management"}> User</Link>,
   },
   {
     key: '2',
-    icon: <DesktopOutlined />,
-    label: <Link to={"eventManagement"}> Event</Link>,
+    // icon: <PieChartOutlined />,
+    label: <Link to={"/admin"}>Programs</Link>,
   },
+  
+  
   {
     key: '3',
-    icon: <ContainerOutlined />,
-    label:<Link to={"userManagement"}> User</Link>,
+    label:<Link to={"categories-Management"}>Categories</Link>,
+  },
+  {
+    key: '4',
+    // icon: <DesktopOutlined />,
+    label: <Link to={"event-Management"}> Event</Link>,
   },
 ];
 export const MenuAdmin =()=>{

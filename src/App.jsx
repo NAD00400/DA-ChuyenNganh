@@ -8,10 +8,12 @@ import { AuthContext } from "./Component/context/auth.context"
 import { getAccountAPI } from "./services/api.service"
 
 const App =()=> {
-  const {setUser ,isAppLoading,setIsAppLoading} = useContext(AuthContext);
+
+const {setUser ,isAppLoading,setIsAppLoading} = useContext(AuthContext);
 useEffect(()=>{
    fetchUserInfo()
 },[])
+
 const fetchUserInfo = async()=>{
   const res = await getAccountAPI();
     if (res.data) {
@@ -36,7 +38,7 @@ const fetchUserInfo = async()=>{
           <Outlet/>
           <Footer/>
        </Flex>
-      }
+     } 
     </>
   )
 }

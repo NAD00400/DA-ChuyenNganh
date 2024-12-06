@@ -13,13 +13,17 @@ import ErrorPage from './page/errorPage.jsx';
 import { LoginPage } from './page/loginPage.jsx';
 
 
-import { EventManagement } from './Component/Admin/EventManagement.jsx';
-import { ProgramsManagement } from './Component/Admin/ProgramsManagement.jsx';
-import { UserManagement } from './Component/Admin/UserManagement.jsx';
+import {  EventMm } from './Component/Admin/EvenMm.jsx';
+import { ProgramsMm } from './Component/Admin/ProgramsMm.jsx';
+import { UserMm } from './Component/Admin/UserMm.jsx';
+import { CatMn } from './Component/Admin/CatMm.jsx';
+
 import { Programs } from './Component/Program/Programs.jsx';
 import { AuthWrapper } from './Component/context/auth.context.jsx';
 import { AdminPage } from './page/AdminPage.jsx';
 import './style/global.css';
+import { ProgramDetail } from './Component/Program/ProgramDetail.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,7 +44,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/programs",
-        element: <Programs />
+        element: <Programs />,
+        children: [
+          {
+            path: "program-detail/:id",  // Thêm id vào đường dẫn
+            element: <ProgramDetail />
+          },
+        ]
       },
       
     ]
@@ -55,23 +65,26 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ProgramsManagement/>
+        element: <ProgramsMm/>
       },
       {
-        path: "userManagement",
-        element: <UserManagement/>
+        path: "user-Management",
+        element: <UserMm/>
       },
       {
-        path: "eventManagement",
-        element: <EventManagement/>
+        path: "event-Management",
+        element: <EventMm/>
       },
-      
+      {
+        path: "categories-Management",
+        element: <CatMn/>
+      },
     ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthWrapper>
-    <RouterProvider router={router}/>,
+    <RouterProvider router={router} future={{ v7_startTransition: true}} />,
   </AuthWrapper>
 );

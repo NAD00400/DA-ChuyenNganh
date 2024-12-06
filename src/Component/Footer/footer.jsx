@@ -46,7 +46,7 @@ const Footer = () => {
           <Text type="secondary">Ghi Danh theo nhóm</Text>
         </Flex>
       </Col>
-      <Col Vxs={6}md={6}>
+      <Col xs={6}md={6}>
         <Flex vertical gap={10}>
           <Title level={5}>ĐĂNG KÝ NHẬN TIN</Title>
   
