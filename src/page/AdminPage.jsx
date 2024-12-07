@@ -9,7 +9,7 @@ import { MenuAdmin } from "../Component/Admin/menuAdmin";
 export const AdminPage =()=> {
     // Admin-specific layout and navigation
     return (
-        <Flex style ={{witdh:"100%",}}>
+        <Flex vertical>
         <MenuAdmin/>
         <Outlet/>
         </Flex>

@@ -1,7 +1,6 @@
 import instance from './axios.customize';
 
-const loginAPI = (email, password ) => {
-    
+export const loginAPI = (email, password ) => {
     const URL_BACKEND = "/api/v1/login"
     const data = {
         email: email,
@@ -9,60 +8,103 @@ const loginAPI = (email, password ) => {
     }
     return instance.post(URL_BACKEND, data);
 }
-const logoutAPI = ( ) => {
+export const logoutAPI = ( ) => {
     const URL_BACKEND = "/api/v1/logout";
     return instance.post(URL_BACKEND);
 }
-const getAccountAPI = () => {
+export const getAccountAPI = () => {
     const URL_BACKEND = "/api/v1/getAccount";
     return instance.get(URL_BACKEND);
 }
 
-const createUserAPI = (name, email, password, phone) => {
+export const createUserAPI = (name, email, password) => {
     const URL_BACKEND = "/api/v1/admin/users";
     const data = {
-        fullName: name,
+        name: name,
         email: email,
-        phone: phone,
         password: password,
     }
     return instance.post(URL_BACKEND, data);
 }
-const getAllUserAPI = () => {
+export const getAllUserAPI = () => {
     const URL_BACKEND = `/api/v1/admin/users`;
     return instance.get(URL_BACKEND);
 }
-const updateUserAPI = (_id,fullName,phone) => {
-    const URL_BACKEND = `/api/v1/admin/users/${_id}`;
+export const updateUserAPI = (id,email,student_name ) => {
+    const URL_BACKEND = `/api/v1/admin/users/${id}`;
     const data = {
-        fullName: fullName,
-        _id:_id,
-        phone: phone
+        name: student_name, // Trường chính xác cần cập nhật
+        email:email,
     }
-    return instance .put(URL_BACKEND, data);
+    return instance.put(URL_BACKEND,data);
 }
-const deleteUserAPi =(_id)=>{
-    const URL_BACKEND = `/api/v1/admin/users/${_id}`;
+export const deleteUserAPi =(id)=>{
+    const URL_BACKEND = `/api/v1/admin/users/${id}`;
     return instance.delete(URL_BACKEND);
 }
-
-const getAllPrograms =()=>{
-    const URL_BACKEND =`/api/v1/programms`
+export const getAllPrograms =()=>{
+    const URL_BACKEND =`/api/v1/admin/programs`
     return instance.get(URL_BACKEND);
 }
-const getProgramById =(id)=>{
+export const getProgramById =(id)=>{
     const URL_BACKEND =`/api/v1/programms/${id}`
     return instance.get(URL_BACKEND);
 }
-const deleteProgram =(_id)=>{
-    const URL_BACKEND = `api/v1/admin/programms/${_id}`;
+
+export const createProgramApi = async (formData) => { /// kiểu code mới học cần thời gian thuần thục
+    const URL_BACKEND = "/api/v1/admin/programs";
+    const res = await instance.post(URL_BACKEND, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }});
+    return res.data;
+  };
+export const deleteProgram =(_id)=>{
+    const URL_BACKEND = `api/v1/admin/programs/${_id}`;
     return instance.delete(URL_BACKEND);
 }
+export  const updateProgramAPI = async (id, formData) => { /// kiểu code này hợp với mình vãixxx đđạn
+    const URL_BACKEND = `/api/v1/admin/programs/${id}`;
+    const res = await instance.put(URL_BACKEND, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+      return res.data;
+  };
 
-
-const getAllCategoriesAPI =()=>{
+export const getAllCategoriesAPI =()=>{
     const URL_BACKEND =`/api/v1/categories`
     return instance.get(URL_BACKEND);
 }
+export const categoriesCreateAPI = (name) => {
+    const URL_BACKEND = `/api/v1/admin/categories`;
+    return instance.post(URL_BACKEND,{cat_title: name});
+}
 
-export{deleteProgram,getAllCategoriesAPI,getProgramById,getAllPrograms,createUserAPI,getAllUserAPI,updateUserAPI,deleteUserAPi,getAccountAPI,loginAPI,logoutAPI,}
+export const deleteCategories =(_id)=>{
+    const URL_BACKEND = `/api/v1/admin/categories/${_id}`;
+    return instance.delete(URL_BACKEND);
+}
+export const getAllEvent =()=>{
+    const URL_BACKEND = `/api/v1/events`;
+    return instance.get(URL_BACKEND);
+}
+export const deleteEventApi =(_id)=>{
+    const URL_BACKEND = `/api/v1/admin/events/${_id}`;
+    return instance.delete(URL_BACKEND);
+}
+export const createEventApi =(formData)=>{
+    const URL_BACKEND = "/api/v1/admin/events";
+    return instance.post(URL_BACKEND, formData)
+}
+
+export const updateEventApi =async(_id,formData)=>{
+    const URL_BACKEND = `/api/v1/admin/events/${_id}`;
+    const res = await instance.put(URL_BACKEND, formData, {
+        headers: {
+            "Content-Type": "application/json", // Dữ liệu gửi lên là JSON
+        },
+    });
+      return res.data;
+  };

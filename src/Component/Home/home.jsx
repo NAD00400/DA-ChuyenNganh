@@ -34,7 +34,7 @@ const HomePage = () => {
         <Row align={"middle"} justify={"center"} style={{textAlign:"center"}}>
           <Col xs={22} md={16} >
             <Title level={2}>
-              Kids Life Coaching <br /> That Educates, Motivates, And Inspires
+              Kids Life Coaching That Educates, Motivates, And Inspires
             </Title>
             <Text>
               We know that life sometimes throws curve balls, but now’s the time

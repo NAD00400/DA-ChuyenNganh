@@ -6,24 +6,23 @@ import { updateUserAPI } from "../../../services/api.service";
 const UpdateUserModal=(props)=>{
     // const { loadUser } = props;
     
-    const [fullName, setFullName] = useState("");
+    const [name, setName] = useState("");
     const [id, setId] = useState("");
-    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
 
     const {IsModalUpdateUser ,setIsModalUpdateUser ,dataUpdate ,setDataUpdate ,loadUser} = props;
 
     // next dataUpdate != prev dataUpdate
     useEffect(()=>{
-
         if(dataUpdate){
-            setFullName(dataUpdate.fullName);    
-            setId(dataUpdate._id);
-            setPhone(dataUpdate.phone);
+            setName(dataUpdate.student.student_name);    
+            setId(dataUpdate.id);
+            setEmail(dataUpdate.email);
         }
         
     },[dataUpdate])
     const handleSubmitBtn = async () => {
-        const res = await updateUserAPI(id,fullName,phone);
+        const res = await updateUserAPI(id,email,name);
         if (res.data) {
             notification.success({
                 message: "Cập nhật User thành công",
@@ -31,7 +30,6 @@ const UpdateUserModal=(props)=>{
             })
             resetAndCloseModal();
             await loadUser();
-
         } else {
             notification.error({
                 message: "Error create user",
@@ -41,9 +39,9 @@ const UpdateUserModal=(props)=>{
     }
     const resetAndCloseModal = () => {
         setIsModalUpdateUser(false);
-        setFullName("");
+        setName("");
         setId("");
-        setPhone("");
+        setEmail("");
         setDataUpdate(null);
     }
     return(
@@ -64,17 +62,17 @@ const UpdateUserModal=(props)=>{
                         />
                     </div>
                     <div>
-                        <span>Full Name</span>
+                        <span>name</span>
                         <Input
-                            value={fullName}
-                            onChange={(event) => { setFullName(event.target.value) }}
+                            value={name}
+                            onChange={(event) => { setName(event.target.value) }}
                         />
                     </div>
                     <div>
-                        <span>Phone number</span>
+                        <span>email</span>
                         <Input
-                            value={phone}
-                            onChange={(event) => { setPhone(event.target.value) }}
+                            value={email}
+                            onChange={(event) => { setEmail(event.target.value) }}
                         />
                     </div>
                 </div>

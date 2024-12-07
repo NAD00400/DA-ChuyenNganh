@@ -1,10 +1,10 @@
-import { Flex, notification, Popconfirm, Table} from 'antd';
+import { Flex, notification, Popconfirm, Table } from 'antd';
 
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { deleteUserAPi, getAllUserAPI } from '../../services/api.service';
 import { UserCreate } from './UserMm/userCreater';
 import { UpdateUserModal } from './UserMm/userUpdate';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 
 const UserMm=()=>{
@@ -14,70 +14,70 @@ const UserMm=()=>{
     useEffect(() => {
         loadUser();
     },[]);
-
     const loadUser = async () => {
         const res = await getAllUserAPI()
         if (res.data){
-            setDataUsers(res.data.data)
+            setDataUsers(res.data)
         }
-        // console.log("check res fetchAllUser",res);
     }
     const columns = [
         {
-            title:"ID",
-            dataIndex: 'id',
-            render: (_,record) => {
-            return(<span href='#'>{record.id}</span>)
-            }
-      },
-      {
-          title: 'role id',
-          dataIndex: 'role_id',
-      },
-      {
+          title: "No",
+          key: "no",
+          render: (text, record, index) => {
+            return <span>{index + 1}</span>;
+          }
+        },
+        {
           title: 'Email',
           dataIndex: 'email',
-      },
-      {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => {
-            return(
-                <div style={{display:"Flex", gap:"20px"}}>
-                    
-                    <EditOutlined
-                        onClick={()=>{
-                            setDataUpdate(record);
-                            setIsModalUpdateUser(true);
-                        }}
-                        style={{cursor:"pointer",color:"#F24333"}}
-                    />
-             
+        },
+        {
+          title: 'Role ID',
+          dataIndex: 'role_id',
+        },
+        
+        {
+          title: 'Action',
+          key: 'action',
+          render: (id, record) => {
+            return (
+              <div style={{ display: "flex", gap: "20px" }} key={record.id}>
+                <EditOutlined
+                  onClick={() => {
+                    setDataUpdate(record);
+                    setIsModalUpdateUser(true);
                   
-                    <Popconfirm
-                        title="Xóa USer "
-                        description="Bạn muốn xóa user này ?"
-                        onConfirm={()=>{handleSubmitBtnDelete(record._id);}}
-                       
-                        cancelText="No"
-                        placement="left"
-                    >
-                       <DeleteOutlined style={{ cursor: "pointer", color: "#5B2333" }} />
-                    </Popconfirm> 
-                </div>
-            )
-        }
-      },
-  ];
-    const handleSubmitBtnDelete = async (id) => {
+                  }}
+                  style={{ cursor: "pointer", color: "#F24333" }}
+                />
+                <Popconfirm
+                  title="Xóa User"
+                  description="Bạn muốn xóa user này?"
+                  onConfirm={() => {
+                    handleSubmitBtnDelete(record.id);
+                  }}
+                  cancelText="No"
+                  placement="left"
+                >
+                  <DeleteOutlined style={{ cursor: "pointer", color: "#5B2333" }} />
+                </Popconfirm>
+              </div>
+            );
+          }
+        },
+      ];
+      
+    const handleSubmitBtnDelete = async(id) => {
+        console.log(id);
         const res = await deleteUserAPi(id);
+        console.log( res);
         if (res.data) {
             notification.success({
                 message: "Delete user",
                 description: "Xóa user thành công"
             })
             await loadUser();
-    
         } else {
             notification.error({
                 message: "Error delete user",
@@ -87,12 +87,15 @@ const UserMm=()=>{
     }
     
     return(
-    <Flex vertical style={{width:"100%"}}>
-        <UserCreate loadUser={loadUser} /> 
+    <Flex vertical style={{width:"100%", height:"100vh"}}>
+        <Flex justify='end' ><UserCreate loadUser={loadUser}/> </Flex>  
         <Table      
         columns={columns}
         dataSource={dataUsers}
-        rowKey={"_id"}
+        rowKey={(record) => record.id}
+        pagination={{
+          pageSize: 7, // Số hàng tối đa trên mỗi trang
+          }}
         />
         <UpdateUserModal
             IsModalUpdateUser={IsModalUpdateUser}
@@ -102,7 +105,7 @@ const UserMm=()=>{
             loadUser={loadUser}
         />
 
-        </Flex>
+    </Flex>
     )
 }
-export {UserMm}
+export { UserMm };

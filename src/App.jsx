@@ -1,7 +1,7 @@
 
 import { Outlet } from "react-router"
 import { Footer } from "./Component/Footer/footer"
-import { Header } from "./Component/Header/header"
+import { HeaderMenu } from "./Component/Header/header"
 import { Flex, Spin } from "antd"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "./Component/context/auth.context"
@@ -16,8 +16,9 @@ useEffect(()=>{
 
 const fetchUserInfo = async()=>{
   const res = await getAccountAPI();
+
     if (res.data) {
-      setUser(res.data.user)
+      setUser(res.data)
     }
     setIsAppLoading(false);
   }
@@ -34,7 +35,7 @@ const fetchUserInfo = async()=>{
       </div>
     :
        <Flex vertical justify="space-between" style ={{witdh:"100%",height:"100vh"}}>
-          <Header/>
+          <HeaderMenu/>
           <Outlet/>
           <Footer/>
        </Flex>

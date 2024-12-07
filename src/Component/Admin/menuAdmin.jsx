@@ -1,17 +1,18 @@
-import { ContainerOutlined, DesktopOutlined,  PieChartOutlined } from "@ant-design/icons";
-import { Menu } from "antd";
+
+import { ConfigProvider, Menu } from "antd";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const items = [
   {
     key: '1',
     // icon: <ContainerOutlined />,
-    label:<Link to={"user-Management"}> User</Link>,
+    label:<Link to={"/admin"}> User</Link>,
   },
   {
     key: '2',
     // icon: <PieChartOutlined />,
-    label: <Link to={"/admin"}>Programs</Link>,
+    label: <Link to={"programs-Management"}>Programs</Link>,
   },
   
   
@@ -24,21 +25,31 @@ const items = [
     // icon: <DesktopOutlined />,
     label: <Link to={"event-Management"}> Event</Link>,
   },
+  
 ];
 export const MenuAdmin =()=>{
+  const [currentMenuAdmin,setCurrentMenuAdmin]=useState(null)
   const onClick = (e) => {
-    console.log('click ', e);
+
+    setCurrentMenuAdmin(e)
   };
     return(<>
-    <Menu
+    <ConfigProvider
+          theme={{
+            components: {
+              Menu: {
+                itemColor: "#22223bff",
+                itemHoverColor: "#4a4e69ff",
+                inlineItemSelectedColor: "#D62828",
+              },
+            },
+          }}
+        >
+      <Menu
       onClick={onClick}
-      style={{
-        width:"20%",
-        height:"100vh"
-      }}
-      defaultSelectedKeys={['1']}
-      defaultOpenKeys={['sub1']}
-      mode="inline"
+      selectedKeys={currentMenuAdmin}
+      mode="horizontal"
       items={items}
-    /></>)
+    />
+    </ConfigProvider></>)
 }

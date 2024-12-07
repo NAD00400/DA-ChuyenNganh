@@ -18,7 +18,8 @@ export const AuthWrapper= (props)=>{
     })
     const [dataProgram, setDataProgram] = useState([]);
     useEffect(() => {
-        const loadProgram = async () => {
+          
+          const loadProgram = async () => {
           const res = await getAllPrograms();
           if (res.data) {
             setDataProgram(res.data);

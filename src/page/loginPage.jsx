@@ -11,17 +11,15 @@ const LoginPage = () => {
   const navigate = useNavigate({});
   const [loading, setLoading] = useState();
 
-
   const onFinish = async (value) => {
     setLoading(true);
     const res = await loginAPI(value.email, value.password);
-    const userData = await getAccountAPI();
-
-    if (userData){
-      message.success("đăng nhập thành công ");
+    if (res){
       localStorage.setItem("access_token", res.data.access_token);
+      const userData = await getAccountAPI();
       setUser(userData.data);
-      console.log("check user",user);
+      message.success("đăng nhập thành công ");
+    
       if(userData.data.role_id==1){
         navigate("/admin");
       }else{

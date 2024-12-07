@@ -1,24 +1,21 @@
-import { Button, ConfigProvider, Flex, notification, Popconfirm, Table } from "antd"
+import { ConfigProvider, Flex, notification, Popconfirm, Table } from "antd"
 
 import { useEffect, useState } from "react";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { deleteProgram, getAllCategoriesAPI } from "../../services/api.service";
+import { DeleteOutlined} from "@ant-design/icons";
+import { deleteCategories, getAllCategoriesAPI } from "../../services/api.service";
+import { CatCreate } from "./catMm/catCreate";
 
 const CatMn =()=>{
 
     const [cat,setCat]=useState([]);
-    const [catUpdate,setCatUpdate]=useState(null);
-    const [IsModalCatUpdate, setIsModalCatUpdate] = useState(false);
     const columns = [
         {
-            title:"Cat_ID",
-            dataIndex: 'cat_id',
-            render: (_,record) => {
-            return(
-                <span href='#'>{record.cat_id}</span>
-            )
-        }
-      },
+            title: "No",
+            key: "no",
+            render: (text, record, index) => {
+              return <span>{index + 1}</span>;
+            }
+        },
       {
           title: 'Categories title',
           dataIndex: 'cat_title',
@@ -29,7 +26,7 @@ const CatMn =()=>{
       },
       {
         title: 'Total courses ',
-        dataIndex: 'total_courses ',
+        dataIndex: 'total_courses',
     },
       {
         title: 'Action',
@@ -37,18 +34,10 @@ const CatMn =()=>{
         render: (_, record) => {
             return(
                 <div style={{display:"Flex", gap:"20px"}}>
-                    
-                    <EditOutlined
-                        onClick={()=>{
-                            setCatUpdate(record);
-                            setIsModalCatUpdate(true);
-                        }}
-                        style={{cursor:"pointer",color:"#F24333"}}
-                    />
                     <Popconfirm
-                        title="Xóa USer "
-                        description="Bạn muốn xóa user này ?"
-                        onConfirm={()=>{handleSubmitBtnDelete(record._id);}}
+                        title="Xóa cat "
+                        description="Bạn muốn xóa categories này .Những môn học trong thể loại cũng sẽ bị xóa trên trang web?"
+                        onConfirm={()=>{handleSubmitBtnDelete(record.cat_id);}}
                         cancelText="No"
                         placement="left"
                     >
@@ -60,17 +49,16 @@ const CatMn =()=>{
       },
   ];
   const handleSubmitBtnDelete = async (id) => {
-    const res = await deleteProgram(id);
+    const res = await deleteCategories(id);
     if (res.data) {
         notification.success({
-            message: "Delete user",
-            description: "Xóa user thành công"
+            message: "Delete cat",
+            description: "Xóa cat thành công"
         })
         await loadCat();
-
     } else {
         notification.error({
-            message: "Error delete user",
+            message: "Error delete cat",
             description: JSON.stringify(res.message)
         })
     }
@@ -87,7 +75,7 @@ const loadCat= async () => {
     return(<>
     
         <Flex vertical style={{width:"100%"}}>
-        <ConfigProvider
+        <Flex justify='end' ><ConfigProvider
                 theme={{
                   components: {
                     Button: {
@@ -99,9 +87,12 @@ const loadCat= async () => {
                     },
                   },
                 }}>
-            <Button style={{margin:"5px 0px"}} >New User</Button>
-        </ConfigProvider>
-        <Table columns={columns} dataSource={cat} style={{width:"100%"}}/>
+         <CatCreate loadCat={loadCat}/>
+        </ConfigProvider></Flex>  
+        
+        <Table columns={columns} dataSource={cat} style={{width:"100%"}} rowKey={(record) => record.cat_id} pagination={{
+        pageSize: 7, // Số hàng tối đa trên mỗi trang
+        }}/>
         </Flex>
     </>)
 }

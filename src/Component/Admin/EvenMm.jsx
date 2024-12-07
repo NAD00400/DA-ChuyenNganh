@@ -1,128 +1,146 @@
-import { Button, ConfigProvider, Flex, Space, Table, Tag } from "antd";
+import { useEffect, useState } from "react";
+import { Table, Space, Button, ConfigProvider, notification, Flex } from "antd";
+import { deleteEventApi } from "../../services/api.service"; // Thêm hàm API tại đây
+import { getAllEvent } from "../../services/api.service";
+import { EventCreate } from "./EventMm/eventCreate";
+import { EventUpdate } from "./EventMm/eventUpdate";
 
-const columns = [
+const EventMm = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isModalCreate,SetIsModalCreate]=useState(false)
+  const [isModalUpdate,SetIsModalUpdate]=useState(false)
+  const [dataUpdate,setDataUpdate]=useState({})
+  // Hàm tải danh sách sự kiện từ API
+  const loadEvents = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllEvent();
+      if (res?.data) {
+        setData(res.data); // Giả định API trả về mảng `events`
+      }
+    } catch (error) {
+      notification.error({
+        message: "Error fetching events",
+        description: error.message || "Có lỗi xảy ra khi tải sự kiện.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Hàm xóa sự kiện
+  const handleDeleteEvent = async (id) => {
+    try {
+      const res = await deleteEventApi(id);
+      if (res?.data) {
+        notification.success({
+          message: "Delete Event",
+          description: "Sự kiện đã được xóa thành công.",
+        });
+        loadEvents(); // Tải lại danh sách sự kiện
+      }
+    } catch (error) {
+      notification.error({
+        message: "Error deleting event",
+        description: error.message || "Có lỗi xảy ra khi xóa sự kiện.",
+      });
+    }
+  };
+
+  // Tải dữ liệu khi component được render
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  // Định nghĩa các cột cho bảng
+  const columns = [
     {
-      title: 'Event Name',
-      dataIndex: 'nameEvent',
-      key: 'nameEvent',
+      title: "No",
+      key: "no",
+      render: (text, record, index) => {
+        return <span>{index + 1}</span>;
+      }
+    },
+    {
+      title: "Event Name",
+      dataIndex: "event_name",
+      key: "event_name",
       render: (text) => <a>{text}</a>,
     },
-    
     {
-      title: 'Start Time',
-      dataIndex: 'startTime',
-      key: 'startTime',
+      title: "Event slug",
+      dataIndex: "event_slug",
+      key: "event_slug",
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
+      title: "Link Video",
+      dataIndex: "url",
+      key: "url",
+      render: (url) => (
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          View Video
+        </a>
       ),
     },
-  
     {
-        title: 'Image',
-        dataIndex: 'image',
-        key: 'image',
+      title: "Event description",
+      dataIndex: "event_description",
+      key: "event_description",
     },
     {
-        title: 'Link Video',
-        dataIndex: 'video',
-        key: 'video',
-    },
-    {
-        title: 'Describe',
-        dataIndex: 'describe',
-        key: 'describe',
-    },
-    {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>Update {record.name}</a>
-          <a>Delete</a>
+        <Button type="link" onClick={() => {SetIsModalUpdate(true) ;setDataUpdate(record)}}>
+            Update
+          </Button>
+          <Button
+            type="link"
+            danger
+            onClick={() => handleDeleteEvent(record.event_id)}
+          >
+            Delete
+          </Button>
         </Space>
       ),
     },
   ];
-  const data = [
-    {
-        id: '1',
-        nameEvent: 'Explore Python',
-        startTime: "3:00 12/4/2002",
-        describe: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Disates repellat corrupti quis deserunt?',
-        tags: ['nice', 'developer'],
-        video:"video",
-        image:"132412412340.png"
+  return (
+    <>
+      <ConfigProvider
+        theme={{
+          components: {
+            Button: {
+              defaultColor: "#000",
+              defaultBg: "#F77F00",
+              defaultHoverColor: "#000",
+              defaultHoverBg: "#Fa3F00",
+              defaultHoverBorderColor: "#Fa3F00",
+            },
+          },
+        }}
+      >
+        <Flex justify="end"> 
+          <Button  onClick={() => {SetIsModalCreate(true)}}>
+            New Event
+          </Button>
+        </Flex>
+      </ConfigProvider>
+      <EventCreate isModalCreate={isModalCreate} SetIsModalCreate={SetIsModalCreate} loadEvents={loadEvents}/>
+      <EventUpdate isModalUpdate={isModalUpdate} SetIsModalUpdate={SetIsModalUpdate} loadEvents={loadEvents} dataUpdate={dataUpdate} setDataUpdate={setDataUpdate}/>
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        rowKey={(record) => record.event_id} // Định danh duy nhất cho mỗi hàng
+        pagination={{
+          pageSize: 7, // Số hàng tối đa trên mỗi trang
+        }}
+      />
+    </>
+  );
+};
 
-    },
-    {
-        id: '1',
-        nameEvent: 'Explore Python',
-        startTime: "3:00 12/4/2002",
-        describe: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Disates repellat corrupti quis deserunt?',
-        tags: ['nice', 'developer'],
-        video:"video",
-        image:"132412412340.png"
-
-    },
-    {
-        id: '1',
-        nameEvent: 'Explore mobile',
-        startTime: "3:00 12/4/2002",
-        describe: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Disates repellat corrupti quis deserunt?',
-        tags: ['nice', 'developer'],
-        video:"video",
-        image:"132412412340.png"
-
-    },
-    {
-        id: '1',
-        nameEvent: 'Explore Game 2D',
-        startTime: "3:00 12/4/2002",
-        describe: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Disates repellat corrupti quis deserunt?',
-        tags: ['nice', 'developer'],
-        video:"video",
-        image:"132412412340.png"
-
-    },
-  ];
-  const EventMm=()=>{
-    return(  <>
-
-    <Flex vertical style={{width:"100%"}}>
-    <ConfigProvider
-                theme={{
-                  components: {
-                    Button: {
-                      defaultColor: "#000",
-                      defaultBg: "#F77F00",
-                      defaultHoverColor: "#000",
-                      defaultHoverBg: "#Fa3F00",
-                      defaultHoverBorderColor: "#Fa3F00",
-                    },
-                  },
-                }}>
-        <Button style={{margin:"5px 0px"}} >New Event</Button>
-    </ConfigProvider>
-        <Table columns={columns} dataSource={data}/>
-    </Flex>
-    </>)
-}
-
-export {EventMm}
+export { EventMm };

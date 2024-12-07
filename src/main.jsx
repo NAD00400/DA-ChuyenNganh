@@ -63,13 +63,15 @@ const router = createBrowserRouter([
     element: <AdminPage />,
     errorElement: <ErrorPage />,
     children: [
+      
       {
         index: true,
-        element: <ProgramsMm/>
+        
+        element: <UserMm/>
       },
       {
-        path: "user-Management",
-        element: <UserMm/>
+        path: "programs-Management",
+        element: <ProgramsMm/>
       },
       {
         path: "event-Management",
