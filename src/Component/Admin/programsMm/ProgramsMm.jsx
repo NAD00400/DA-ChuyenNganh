@@ -1,10 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ConfigProvider, Flex, notification, Popconfirm, Space, Table } from "antd";
-import { useContext, useEffect, useState } from "react";
-import { deleteProgram, getAllPrograms } from "../../services/api.service";
-import { ProgramUpdate } from "./programsMm/programUpdate";
-import { ProgramCreate } from "./programsMm/ProgramCreate";
-import { AuthContext } from "../context/auth.context";
+import { useEffect, useState } from "react";
+import { deleteProgram, getAllPrograms } from "../../../services/api.service";
+import { ProgramUpdate } from "./programUpdate";
+import { ProgramCreate } from "./ProgramCreate";
+
 
 
 
@@ -14,8 +14,6 @@ const ProgramsMm=()=>{
   const [dataUpdate,setDataUpdate]=useState(null);
   const [isModalUpdateProgram, setIsModalUpdateProgram] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const {categories}=useContext(AuthContext)
   const columns = [
     {
       title: "No",
@@ -39,11 +37,7 @@ const ProgramsMm=()=>{
     {
       title: 'Categories',
       key: 'cat_id',
-      dataIndex: "cat_id",
-      render: (cat_id) => {
-        const cate = categories.find((item) => {return item.cat_id == cat_id;});
-        return cate ? cate.cat_title : cat_id; 
-      },  
+      dataIndex: "course_category.cat_id",
     },
     {
       title: 'Type',
@@ -93,19 +87,19 @@ const ProgramsMm=()=>{
   
     
     useEffect(() => {
+      
         loadPrograms();
-        
     },[]);
-
     const loadPrograms = async () => {
-        const res = await getAllPrograms()
-    
-        if (res.data){
-          setDataPrograms(res.data)
-       
-        }
+      const res = await getAllPrograms()
   
-    }
+      if (res.data){
+        setDataPrograms(res.data)
+     
+      }
+
+  }
+   
   const handleSubmitBtnDelete = async (id) => {
     const res = await deleteProgram(id);
     if (res.data) {
@@ -137,7 +131,7 @@ const ProgramsMm=()=>{
                     },
                   },
                 }}>
-            <ProgramCreate cat={categories} loadPrograms={loadPrograms}
+            <ProgramCreate  loadPrograms={loadPrograms}
             isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
         </ConfigProvider></Flex>  
         
@@ -146,7 +140,7 @@ const ProgramsMm=()=>{
         }}/>
         
         <ProgramUpdate
-        cat={categories}
+        
         isModalUpdateProgram={isModalUpdateProgram}
         setIsModalUpdateProgram={setIsModalUpdateProgram}
         dataUpdate={dataUpdate}

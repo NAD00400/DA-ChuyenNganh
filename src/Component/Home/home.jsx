@@ -2,14 +2,23 @@
 import { Button, Card, Col, ConfigProvider, Divider, Flex, Image, Row, Typography } from "antd";
 
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { useContext } from "react";
-import { AuthContext } from "../context/auth.context";
+import { useEffect, useState } from "react";
+
+import { getAllCategoriesAPI } from "../../services/api.service";
 
 
 const HomePage = () => {
   const { Title, Text } = Typography;
-  const {categories}  = useContext(AuthContext);
-  
+  const [categories,setCategories] = useState([]);
+  useEffect (()=>{
+    const loadCategory = async () =>{
+      const res = await getAllCategoriesAPI();
+      if (res.data) {
+      setCategories (res.data)
+      }
+    };
+    loadCategory()
+    },[])
   const getImageSrc = (courseName) => {
     if (courseName.includes("ngoai-ngu")) {
       return "src/assets/categoriesImg/5.jpeg";

@@ -8,9 +8,9 @@ const CatCreate =(props)=>{
     let [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCreateCat = async (value) => {
-        console.log(value);
+
         const res = await categoriesCreateAPI(value.name);
-        console.log(res);
+
         if (res.data) {
             notification.success({
                 message: "Create categories",

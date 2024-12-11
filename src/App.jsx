@@ -35,9 +35,9 @@ const fetchUserInfo = async()=>{
       </div>
     :
        <Flex vertical justify="space-between" style ={{witdh:"100%",height:"100vh"}}>
-          <HeaderMenu/>
-          <Outlet/>
-          <Footer/>
+          <HeaderMenu />
+          <Outlet /> {/* Đây là nơi các component con sẽ được render */}
+          <Footer />
        </Flex>
      } 
     </>

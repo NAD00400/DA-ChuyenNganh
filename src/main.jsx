@@ -13,16 +13,20 @@ import ErrorPage from './page/errorPage.jsx';
 import { LoginPage } from './page/loginPage.jsx';
 
 
-import {  EventMm } from './Component/Admin/EvenMm.jsx';
-import { ProgramsMm } from './Component/Admin/ProgramsMm.jsx';
-import { UserMm } from './Component/Admin/UserMm.jsx';
-import { CatMn } from './Component/Admin/CatMm.jsx';
+
 
 import { Programs } from './Component/Program/Programs.jsx';
 import { AuthWrapper } from './Component/context/auth.context.jsx';
 import { AdminPage } from './page/AdminPage.jsx';
 import './style/global.css';
 import { ProgramDetail } from './Component/Program/ProgramDetail.jsx';
+import { Leaning } from './Component/Learning/Learning.jsx';
+import { LearningMm } from './Component/Admin/LearningMm/LeaningMm.jsx';
+import { CatMn } from './Component/Admin/catMm/CatMm.jsx';
+import { EventMm } from './Component/Admin/EventMm/EvenMm.jsx';
+import { ProgramsMm } from './Component/Admin/programsMm/ProgramsMm.jsx';
+import { UserMm } from './Component/Admin/UserMm/UserMm.jsx';
+import { CoursesVideoMn } from './Component/Admin/CoursesVideoMm/CoursesVideoMn.jsx';
 
 const router = createBrowserRouter([
   {
@@ -45,14 +49,15 @@ const router = createBrowserRouter([
       {
         path: "/programs",
         element: <Programs />,
-        children: [
-          {
-            path: "program-detail/:id",  // Thêm id vào đường dẫn
-            element: <ProgramDetail />
-          },
-        ]
       },
-      
+      {
+        path:"/program-detail/:idP",
+        element: <ProgramDetail/>
+      },
+      {
+        path:"/learning",
+        element: <Leaning/>
+      },
     ]
   },{
     path: "/login",
@@ -66,7 +71,6 @@ const router = createBrowserRouter([
       
       {
         index: true,
-        
         element: <UserMm/>
       },
       {
@@ -80,6 +84,14 @@ const router = createBrowserRouter([
       {
         path: "categories-Management",
         element: <CatMn/>
+      },
+      {
+        path: "learning-Management",
+        element: <LearningMm/>
+      },
+      {
+        path: "courseVideo-Management",
+        element: <CoursesVideoMn/>
       },
     ]
   }

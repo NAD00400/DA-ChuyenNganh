@@ -1,21 +1,32 @@
 import {Button,Card,Checkbox,Col,ConfigProvider,Flex,Form,Input,Menu,Row,Typography,
 } from "antd";
-import { useContext, useState } from "react";
+import {useEffect, useState } from "react";
 
 import {  useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/auth.context";
+import { getAllCategoriesAPI, getAllPrograms } from "../../services/api.service";
+
 const { Text, Title } = Typography;
 
 export const Programs = () => {
-  const {categories}  = useContext(AuthContext);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const [dataProgram, setDataProgram] = useState([]);
   const navigate = useNavigate();
+ 
+  const [categories,setCategories] = useState([]);
 
-
-console.log(categories);
+  useEffect(() => {
+    const loadCategory = async () =>{const res = await getAllCategoriesAPI();
+      if (res.data) {setCategories (res.data)}
+    };
+    loadCategory()
+    const loadProgram = async () => {const res = await getAllPrograms();
+    if (res.data) {setDataProgram(res.data);}
+    };
+    loadProgram();
+    },[]);
 const itemsMenuProgram =[{
-  key: "all", // Key cho item "Xem tất cả khóa học"
+  key: "all", 
   label: "Xem tất cả khóa học",
 },
 ...categories.map ((category)=>({
@@ -31,10 +42,11 @@ const onClick = (e) => {
   }
 };
 const handleProgramClick= (id)=>{
-  navigate(`/programs/program-detail/${id}`);
+  
+  navigate(`/program-detail/${id}`);
 }
 
-const {dataProgram } = useContext(AuthContext);
+
 const filteredPrograms = selectedCategory
     ? dataProgram.filter(
         (item) => item.course_category.cat_slug === selectedCategory

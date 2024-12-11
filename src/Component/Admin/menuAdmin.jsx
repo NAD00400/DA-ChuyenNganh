@@ -6,26 +6,32 @@ import { Link } from "react-router-dom";
 const items = [
   {
     key: '1',
-    // icon: <ContainerOutlined />,
     label:<Link to={"/admin"}> User</Link>,
   },
   {
     key: '2',
     // icon: <PieChartOutlined />,
-    label: <Link to={"programs-Management"}>Programs</Link>,
+    label: <Link to={"programs-Management"}>Programs Management</Link>,
   },
-  
-  
   {
     key: '3',
-    label:<Link to={"categories-Management"}>Categories</Link>,
+    label:<Link to={"categories-Management"}>Categories Management</Link>,
   },
   {
     key: '4',
-    // icon: <DesktopOutlined />,
-    label: <Link to={"event-Management"}> Event</Link>,
+
+    label: <Link to={"event-Management"}> Event Management</Link>,
   },
-  
+  {
+    key: '5',
+
+    label: <Link to={"learning-Management"}>Learning Management</Link>,
+  },
+  {
+    key: '6',
+    // icon: <DesktopOutlined />,
+    label: <Link to={"courseVideo-Management"}>Learning Management</Link>,
+  },
 ];
 export const MenuAdmin =()=>{
   const [currentMenuAdmin,setCurrentMenuAdmin]=useState(null)

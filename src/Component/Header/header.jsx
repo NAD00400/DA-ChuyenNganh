@@ -12,10 +12,10 @@ const HeaderMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [current, setCurrent] = useState("");
-  console.log(user);
+
   useEffect(() => {
     if (location && location.pathname) {
-      const allRoutes = ["home", "new", "programs", "about"];
+      const allRoutes = ["home", "new", "programs", "about" ,"learning"];
       const currentRoute = allRoutes.find((item) => `/${item}` === location.pathname);
       if (currentRoute) {
         setCurrent(currentRoute);
@@ -47,14 +47,13 @@ const HeaderMenu = () => {
   const menuItems = [
     {
       label: (
-        <Link to="/">
           <Image
-            src="src/assets/logo.png"
+            src="./src/assets/logo.png"
             preview={{ visible: false, movable: false, mask: false }}
             width={80}
-            alt="Logo"
+            height={38}
+            style={{position:"sticky", top:"0px"}}
           />
-        </Link>
       ),
       key: "logo", // Không chọn được
       disabled: true,
@@ -102,7 +101,6 @@ const HeaderMenu = () => {
       key: "auth",
     },
   ];
-
   return (
     <Row justify="center" align="middle" style={{ position: "sticky", top: 0, zIndex: 1, backgroundColor: "#fff" ,}}>
       <Col span={9}>

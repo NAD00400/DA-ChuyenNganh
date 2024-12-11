@@ -2,9 +2,9 @@ import { Flex, notification, Popconfirm, Table } from 'antd';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { deleteUserAPi, getAllUserAPI } from '../../services/api.service';
-import { UserCreate } from './UserMm/userCreater';
-import { UpdateUserModal } from './UserMm/userUpdate';
+import { deleteUserAPi, getAllUserAPI } from "../../../services/api.service";
+import { UserCreate } from './userCreater';
+import { UpdateUserModal } from './userUpdate';
 
 
 const UserMm=()=>{
@@ -69,9 +69,9 @@ const UserMm=()=>{
       ];
       
     const handleSubmitBtnDelete = async(id) => {
-        console.log(id);
+
         const res = await deleteUserAPi(id);
-        console.log( res);
+
         if (res.data) {
             notification.success({
                 message: "Delete user",

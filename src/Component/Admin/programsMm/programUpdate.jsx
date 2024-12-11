@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Button, Input, InputNumber, Modal, notification, Select, Upload } from "antd";
-import { useContext, useEffect, useState } from "react";
-import { updateProgramAPI} from "../../../services/api.service";
+import { useEffect, useState } from "react";
+import { getAllCategoriesAPI, updateProgramAPI} from "../../../services/api.service";
 import { UploadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../context/auth.context";
+
 
 const ProgramUpdate=(props)=>{
 const { loadPrograms, setIsModalUpdateProgram, isModalUpdateProgram, dataUpdate, setDataUpdate } = props;
@@ -14,10 +14,19 @@ const { loadPrograms, setIsModalUpdateProgram, isModalUpdateProgram, dataUpdate,
   const [price, setPrice] = useState("");
   const [fileList, setFileList] = useState([]); 
   const [catId, setCatId] = useState(""); 
-  const {categories} = useContext(AuthContext); 
+  const [categories,setCategories]=useState([])
 
   // Cập nhật khi dataUpdate thay đổi
   useEffect(() => {
+
+      const loadCat =async()=>{
+      const res =await getAllCategoriesAPI()
+        if(res.data){
+          setCategories(res.data)
+        }
+      }
+      loadCat()
+
     if (dataUpdate) {
       setName(dataUpdate.course_name);
       setId(dataUpdate.course_id);

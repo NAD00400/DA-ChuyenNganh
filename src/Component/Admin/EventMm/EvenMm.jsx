@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Table, Space, Button, ConfigProvider, notification, Flex } from "antd";
-import { deleteEventApi } from "../../services/api.service"; // Thêm hàm API tại đây
-import { getAllEvent } from "../../services/api.service";
-import { EventCreate } from "./EventMm/eventCreate";
-import { EventUpdate } from "./EventMm/eventUpdate";
+
+import { getAllEvent, deleteEventApi } from "../../../services/api.service";
+import { EventCreate } from "./eventCreate";
+import { EventUpdate } from "./eventUpdate";
 
 const EventMm = () => {
   const [data, setData] = useState([]);

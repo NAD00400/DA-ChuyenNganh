@@ -1,17 +1,26 @@
 import { Button, ConfigProvider, Form, Input, InputNumber, Modal, notification, Select, Upload } from "antd";
-import { useContext, useState,} from "react";
-import { createProgramApi } from "../../../services/api.service";
+import {  useEffect, useState,} from "react";
+import { createProgramApi, getAllCategoriesAPI  } from "../../../services/api.service";
 import { UploadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../context/auth.context";
+
 
 const ProgramCreate = (props) => {
     // eslint-disable-next-line react/prop-types
     const { loadPrograms, setIsModalOpen, isModalOpen } = props;
     const [form] = Form.useForm();
-    const { categories } = useContext(AuthContext);
+    const [categories,setCategories]=useState([])
     const [fileList, setFileList] = useState([]); // Lưu trữ file đã chọn
-  
+    useEffect(()=>{
+      const loadCat =async()=>{
+      const res =await getAllCategoriesAPI()
+        if(res.data){
+          setCategories(res.data)
+        }
+      }
+      loadCat()
+    },[]);
     const handleCreateProgram = async (value) => {
+      
       // Tạo FormData để gửi dữ liệu bao gồm cả file ảnh
       const formData = new FormData();
       formData.append('course_name', value.course_name);

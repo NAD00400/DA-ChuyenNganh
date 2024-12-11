@@ -47,10 +47,9 @@ export const getAllPrograms =()=>{
     return instance.get(URL_BACKEND);
 }
 export const getProgramById =(id)=>{
-    const URL_BACKEND =`/api/v1/programms/${id}`
+    const URL_BACKEND =`/api/v1/programs/${id}`
     return instance.get(URL_BACKEND);
 }
-
 export const createProgramApi = async (formData) => { /// kiểu code mới học cần thời gian thuần thục
     const URL_BACKEND = "/api/v1/admin/programs";
     const res = await instance.post(URL_BACKEND, formData, {
@@ -108,3 +107,25 @@ export const updateEventApi =async(_id,formData)=>{
     });
       return res.data;
   };
+// lấy khóa học mà 1 ng dăng ký 
+export const getMyprogram =()=>{
+    const URL_BACKEND = "/api/v1/my-programs";
+    return instance.get(URL_BACKEND)
+}
+// quản lý đăng ký 
+export const getLearningMn =()=>{
+    const URL_BACKEND = "/api/v1/admin/course-registrations";
+    return instance.get(URL_BACKEND)
+}
+export const getLearningDetail =(id)=>{
+    const URL_BACKEND = `/api/v1/admin/course-registrations/${id}`;
+    return instance.get(URL_BACKEND)
+}
+export const createLearning =(formData)=>{
+    const URL_BACKEND = "api/v1/admin/course-registrations";
+    return instance.post(URL_BACKEND, formData)
+}
+export const deleteLearning =(id)=>{
+    const URL_BACKEND = `api/v1/admin/course-registrations/${id}`;
+    return instance.delete(URL_BACKEND)
+}

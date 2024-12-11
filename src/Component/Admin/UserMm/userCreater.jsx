@@ -8,9 +8,8 @@ const UserCreate =(props)=>{
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCreateUser = async (value) => {
-        console.log(value);
+
         const res = await createUserAPI(value.name, value.email, value.password);
-        console.log(res);
         if (res.data) {
             notification.success({
                 message: "Create user",
