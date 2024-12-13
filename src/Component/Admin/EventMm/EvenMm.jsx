@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Table, Space, Button, ConfigProvider, notification, Flex } from "antd";
 
-import { getAllEvent, deleteEventApi } from "../../../services/api.service";
+
 import { EventCreate } from "./eventCreate";
 import { EventUpdate } from "./eventUpdate";
+import { deleteEventApi, getAllEvent } from "../../../services/api/events.api";
 
 const EventMm = () => {
   const [data, setData] = useState([]);

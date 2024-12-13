@@ -1,8 +1,11 @@
-import { Card, Col, ConfigProvider, Flex, Menu, Typography } from "antd"
-import {  useEffect, useState } from "react";
+import { Card, Col, ConfigProvider, Flex, Menu, Row, Typography } from "antd";
+import { useEffect, useState } from "react";
 
-import { AppstoreOutlined,  } from "@ant-design/icons";
-import { getAllCategoriesAPI, getMyprogram } from "../../services/api.service";
+import { AppstoreOutlined, } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { getAllCategoriesAPI } from "../../services/api/categories.api";
+import { getMyProgram } from "../../services/api/registration.api";
+
 
 export const Leaning =()=>{
     const [filteredPrograms, setFilteredPrograms] = useState([]);
@@ -21,7 +24,7 @@ export const Leaning =()=>{
           if (res.data) {setCategories(res.data)}
         };
         loadCategory()
-        const loadMyProgram = async () =>{const res = await getMyprogram();
+        const loadMyProgram = async () =>{const res = await getMyProgram();
             if (res.data) {setIsMyProgram(res.data)
                 setFilteredPrograms(res.data); }
             
@@ -46,7 +49,10 @@ export const Leaning =()=>{
         label: category.cat_title, 
         icon: <AppstoreOutlined />,
       }))]
-
+    const navigate = useNavigate();
+    const handleCardClick = (courseId) => {
+      navigate(`/learning-detail/${courseId}`);
+    };
     return(<Flex gap={0} vertical>
 
         <Flex style={{backgroundColor:"#B12057", color:"#fff", padding:"20px 110px"}} vertical gap={0}>
@@ -69,40 +75,61 @@ export const Leaning =()=>{
         <Menu onClick={onClick} selectedKeys={current} mode="horizontal" items={itemsMenuProgram} />
         </div>
         <div style={{ padding: "20px 90px" }}>
-        <Flex wrap="wrap" gap={16}>
-          {filteredPrograms.map((item) => (
-            <Col xs={24} md={7} key={item.course_id}>
-              <Card
-                hoverable
-                style={{ width: '100%', minHeight: "235px" }}
-                cover={
-                  <img
-                    alt={item.course_name}
-                    src={item.course_thumbnail ? `path/to/images/${item.course_thumbnail}` : 'default_image.jpg'}
-                  />
-                }
-                onClick={() => console.log(`Clicked on course ID: ${item.course_id}`)} // Handle click
-              >
-                <Card.Meta
-                  title={
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          colorText: "#000",
-                        },
-                      }}
-                    >
-                      <Typography.Title level={5}>
-                        {item.course_name}
-                      </Typography.Title>
-                    </ConfigProvider>
+            <Row gutter={[16, 16]}  align="top">
+            {filteredPrograms.map((item) => (
+              <Col xs={24} sm={12} md={6} lg={6} key={item.course_id}>
+                <Card
+                  hoverable
+                  style={{
+                    width: "100%",
+                    maxWidth: "330px",
+                    minHeight:"360px",
+                    height: "100%",
+
+                  }}
+                  cover={
+                    <img
+                      alt={item.course_name}
+                      src={item.course_thumbnail}
+                      style={{ height: "200px", objectFit: "cover" }} // Đặt chiều cao và tỉ lệ hình ảnh
+                    />
                   }
-                  description={item.course_description}
-                />
-              </Card>
-            </Col>
-          ))}
-        </Flex>
+                  onClick={() => handleCardClick(item.course_id)} // Handle click
+                >
+                   
+                  <Card.Meta
+                    title={
+                      <ConfigProvider
+                        theme={{
+                          token: {
+                            colorText: "#000",
+                          },
+                        }}
+                      >
+                        <Typography.Title level={5}
+                        ellipsis={{
+                          rows: 1, // Giới hạn mô tả hiển thị 3 dòng
+                          expandable: false,
+                        }}>
+                          {item.course_name}
+                        </Typography.Title>
+                      </ConfigProvider>
+                    }
+                    description={
+                      <Typography.Paragraph
+                        ellipsis={{
+                          rows: 3, // Giới hạn mô tả hiển thị 3 dòng
+                          expandable: false,
+                        }}
+                      >
+                        {item.course_description}
+                      </Typography.Paragraph>
+                    }
+                  />
+                </Card>
+              </Col>
+            ))}
+          </Row>
       </div>
         
         

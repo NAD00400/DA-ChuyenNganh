@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom";
 
 
-import { useEffect, useState } from "react";
-import { Button, Col, ConfigProvider, Flex, Row, Spin, Typography } from "antd";
-import { getProgramById } from "../../services/api.service";
+import { useContext, useEffect, useState } from "react";
+import { Button, Col, ConfigProvider, Flex, Form, message, Row, Select, Spin, Typography } from "antd";
+
 import { CaretRightOutlined, HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { getProgramById } from "../../services/api/programs.api";
+import { AuthContext } from "../context/auth.context";
+import { createLearning } from "../../services/api/clientLeaning.api";
 
 
 const ProgramDetail=()=> {
@@ -13,8 +16,12 @@ const ProgramDetail=()=> {
   const [dataProgramDetail,setDataProgramDetail]=useState({})
   const [loading, setLoading] = useState(true); // Thêm state loading
   console.log("data" ,dataProgramDetail);
+  const { user } = useContext(AuthContext); 
+  const [paymentMethod, setPaymentMethod] = useState(null); // Trạng thái phương thức thanh toán
+  const [isFormVisible, setIsFormVisible] = useState(false); // Hiện form khi nhấn tạo phiếu đăng ký
+  const [form] = Form.useForm();
+  const [isRegistered, setIsRegistered] = useState(false); // Trạng thái đã đăng ký
 
-  
   const handleClickHeart = () => {
     // Chuyển đổi trạng thái giữa true và false
     setIsFilled(!isFilled);
@@ -41,6 +48,7 @@ const ProgramDetail=()=> {
     loadProgramDetail();
   }
   }, [idP]);
+
   if (loading) {
     return (
       <div style={{ textAlign: "center", padding: "50px" }}>
@@ -48,6 +56,53 @@ const ProgramDetail=()=> {
       </div>
     );
   }
+  // eslint-disable-next-line no-unused-vars
+  const handleRegister = async (values) => {
+
+    // Gửi thông tin đăng ký khóa học
+    if (!paymentMethod) {
+      message.error("Vui lòng chọn phương thức thanh toán!");
+      return;
+    }
+
+    const data = {
+      user_id: user.id,
+      course_ids: [dataProgramDetail.course_id], // ID khóa học hiện tại
+      payment_method: paymentMethod,
+    };
+
+    try {
+      const res = await createLearning(data);
+      if (res?.status === 200) {
+        message.success("Đăng ký thành công!");
+        setIsFormVisible(false); // Ẩn form đăng ký sau khi thành công
+        setIsRegistered(true);
+      } else {
+        message.error("Đã xảy ra lỗi khi đăng ký!");
+      }
+    } catch (error) {
+      console.error("Error registering course:", error);
+      message.error("Đăng ký thất bại!");
+    }
+  };
+
+  const handlePaymentChange = (value) => {
+    setPaymentMethod(value); // Cập nhật phương thức thanh toán
+  };
+  const handleButtonClick = () => {
+    if (isRegistered) return; // Nếu đã đăng ký, không làm gì nữa
+    
+    if (!paymentMethod) {
+      // Nếu chưa chọn phương thức thanh toán, hiển thị form
+      setIsFormVisible(true);
+    } else {
+      // Nếu đã chọn phương thức thanh toán, đăng ký
+      handleRegister();
+    }
+  };
+
+ 
+
   return (
     <div>
       <Flex vertical>
@@ -114,8 +169,7 @@ const ProgramDetail=()=> {
           <video controls width="500">
           {dataProgramDetail.course_videos && dataProgramDetail.course_videos.length > 0 ? (
             <source
-              src="{dataProgramDetail.course_videos[0].video_url}"
-              
+              src={dataProgramDetail.course_videos[0].video_url}
               type="video/mp4"
             />
           ) : (
@@ -132,16 +186,24 @@ const ProgramDetail=()=> {
                     Button: {
                       defaultColor: "#FFF",
                       defaultBg: "#D62828",
-                      defaultHoverColor:"#fff",
+                      defaultHoverColor: "#fff",
                       defaultHoverBorderColor: "#D62828",
-                      defaultBorderColor:"#D62828",
-                      defaultHoverBg:"#D62828",
+                      defaultBorderColor: "#D62828",
+                      defaultHoverBg: "#D62828",
                     },
                   },
-                }}>
-               
-                  <Button style={{width:"87%", borderRadius:"0px ", padding:"20px"}}>ĐĂNG KÝ NGAY</Button>
-                </ConfigProvider>      
+                }}
+              >
+                <Button
+                  style={{ width: "87%", borderRadius: "0px", padding: "20px" }}
+                  onClick={handleButtonClick}
+                  disabled={isRegistered} // Vô hiệu hóa nút nếu đã đăng ký
+                >
+                  {isRegistered ? "Đã Đăng Ký" : paymentMethod ? "Xác Nhận" : "Tạo Phiếu Đăng Ký"}
+                </Button>
+              </ConfigProvider>
+
+
                 <ConfigProvider
                 theme={{
                   components: {
@@ -158,12 +220,35 @@ const ProgramDetail=()=> {
                   <Button style={{width:"10%", borderRadius:"0px ", padding:"20px"}} onClick={handleClickHeart}>{isFilled ? <HeartFilled /> : <HeartOutlined />}</Button>
                 </ConfigProvider>   
                 </Flex>
+                {isFormVisible && (
+                <div style={{ marginTop: 20 }}>
+                  <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={handleRegister}
+                    initialValues={{ payment_method: paymentMethod }}
+                  >
+                    <Form.Item label="Phương thức thanh toán" name="payment_method" rules={[{ required: true, message: "Vui lòng chọn phương thức thanh toán!" }]}>
+                      <Select
+                        placeholder="Chọn phương thức thanh toán"
+                        onChange={handlePaymentChange}
+                        style={{ width: "100%" }}
+                      >
+                        <Select.Option value={1}>Tiền mặt</Select.Option>
+                        <Select.Option value={2}>Chuyển khoản ngân hàng</Select.Option>
+                        <Select.Option value={3}>Ngân hàng trực tuyến</Select.Option>
+                        <Select.Option value={4}>Ví điện tử</Select.Option>
+                      </Select>
+                    </Form.Item>
+                  </Form>
+                </div>
+              )}
             </Flex>
           </Flex>
         </Col>
       </Row>
     </Flex>
-
+    
 
     </div>
   );

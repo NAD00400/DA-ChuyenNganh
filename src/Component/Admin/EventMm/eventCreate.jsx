@@ -1,5 +1,6 @@
 import { Form, Input, Modal, notification } from "antd"
-import { createEventApi } from "../../../services/api.service";
+import { createEventApi } from "../../../services/api/events.api";
+
 
 const EventCreate =(props)=>{
     // eslint-disable-next-line react/prop-types

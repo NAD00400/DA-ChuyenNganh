@@ -27,11 +27,13 @@ import { EventMm } from './Component/Admin/EventMm/EvenMm.jsx';
 import { ProgramsMm } from './Component/Admin/programsMm/ProgramsMm.jsx';
 import { UserMm } from './Component/Admin/UserMm/UserMm.jsx';
 import { CoursesVideoMn } from './Component/Admin/CoursesVideoMm/CoursesVideoMn.jsx';
+import { ManageConsultationForm } from './Component/Admin/Contact/manageConsultationForm.jsx';
+import { LearningDetail } from './Component/Learning/learningDetail.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <App/>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -57,6 +59,10 @@ const router = createBrowserRouter([
       {
         path:"/learning",
         element: <Leaning/>
+      },
+      {
+        path:"/learning-detail/:idL",
+        element: <LearningDetail/>
       },
     ]
   },{
@@ -92,6 +98,14 @@ const router = createBrowserRouter([
       {
         path: "courseVideo-Management",
         element: <CoursesVideoMn/>
+      },
+      {
+        path: "courseVideo-Management",
+        element: <CoursesVideoMn/>
+      },
+      {
+        path: "manage-Consultation-Form",
+        element: <ManageConsultationForm/>
       },
     ]
   }

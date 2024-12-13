@@ -1,6 +1,7 @@
 import { Form, Input, Modal, notification } from "antd";
 import { useEffect } from "react";
-import { updateEventApi } from "../../../services/api.service";
+import { updateEventApi } from "../../../services/api/events.api";
+
 
 
 const EventUpdate = (props) => {

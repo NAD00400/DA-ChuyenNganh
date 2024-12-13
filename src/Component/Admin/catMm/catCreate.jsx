@@ -1,6 +1,7 @@
 import { Button, ConfigProvider, Form, Input, Modal, notification } from "antd"
-import { categoriesCreateAPI} from "../../../services/api.service";
+
 import { useState } from "react";
+import { categoriesCreateAPI } from "../../../services/api/categories.api";
 const CatCreate =(props)=>{
     // eslint-disable-next-line react/prop-types
     const {loadCat} = props;

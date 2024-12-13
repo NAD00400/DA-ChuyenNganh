@@ -1,6 +1,7 @@
-import { Button, Card, Col, Flex, Row, Typography } from "antd";
+import { Card, Col, Flex, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { getAllEvent } from "../../services/api.service";
+import { getAllEvent } from "../../services/api/events.api";
+
 
 
 const Event =()=>{

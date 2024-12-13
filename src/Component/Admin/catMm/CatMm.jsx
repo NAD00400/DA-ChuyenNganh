@@ -2,8 +2,9 @@ import { ConfigProvider, Flex, notification, Popconfirm, Table } from "antd"
 
 import { useEffect, useState } from "react";
 import { DeleteOutlined} from "@ant-design/icons";
-import { deleteCategories, getAllCategoriesAPI } from "../../../services/api.service";
+
 import { CatCreate } from "./catCreate";
+import { deleteCategories, getAllCategoriesAPI } from "../../../services/api/categories.api";
 
 const CatMn =()=>{
 

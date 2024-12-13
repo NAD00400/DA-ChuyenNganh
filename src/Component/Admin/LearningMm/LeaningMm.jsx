@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Drawer, Table, Modal, Form, Select,  Button, Flex } from 'antd';
-import { getLearningDetail, getLearningMn,  deleteLearning, createLearning, getAllUserAPI, getAllPrograms } from '../../../services/api.service';
+import { Drawer, Table, Modal, Form, Select,  Button, Flex, Popconfirm } from 'antd';
+import { createLearning, deleteLearning, getLearningDetail, getLearningMn, verificationLearning } from '../../../services/api/registration.api';
+import { getAllPrograms } from '../../../services/api/programs.api';
+import { getAllUserAPI } from '../../../services/api/user.api';
+
 
 export const LearningMm = () => {
   const [registrationData, setRegistrationData] = useState([]);
@@ -50,6 +53,17 @@ export const LearningMm = () => {
         <Button danger onClick={() => handleDelete(record.res_id)}>
           Delete
         </Button>
+        <Popconfirm
+          placement="bottomRight"
+          title="Xác thực thanh toán"
+          description="Bạn có chắc chắn muốn xác thực thanh toán của Phiếu đăng ký này không?"
+          okText="Xác nhận"
+          cancelText="Hủy"
+          onConfirm={() => handleVerification(record.res_id)} // Chỉ thực hiện khi người dùng xác nhận
+        >
+          <Button >Payment Verification</Button>
+        </Popconfirm>
+
         </Flex>
       ),
     },
@@ -105,6 +119,15 @@ export const LearningMm = () => {
       setModalVisible(false);
       }
   };
+  const handleVerification = async (resId) => {
+    try {
+      await verificationLearning(resId);
+      loadRegistrations(); // Reload danh sách sau khi xóa
+    } catch (error) {
+      console.error("Error deleting registration", error);
+    }
+  };
+  
   //
   const handleDetail = (id)=>{
     loadLearningDetail(id);
@@ -118,7 +141,7 @@ export const LearningMm = () => {
 
       // Lấy tất cả người dùng khi mở modal
       const usersResponse = await getAllUserAPI(); // API lấy tất cả người dùng
-      setUsers(usersResponse.data || []);
+      setUsers(usersResponse.data.data || []);
     } catch (error) {
       console.error("Error loading programs or users", error);
     }
@@ -150,6 +173,7 @@ export const LearningMm = () => {
   return (
     <>
       <div style={{ padding:'20px 20px 0' }} >
+        
         <Button type="default" onClick={showModal} style={{width:"100%"}}>
           Add New Registration
         </Button>

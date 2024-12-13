@@ -2,9 +2,10 @@ import { Flex, notification, Popconfirm, Table } from 'antd';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { deleteUserAPi, getAllUserAPI } from "../../../services/api.service";
+
 import { UserCreate } from './userCreater';
 import { UpdateUserModal } from './userUpdate';
+import { deleteUserAPi, getAllUserAPI } from '../../../services/api/user.api';
 
 
 const UserMm=()=>{
@@ -12,10 +13,12 @@ const UserMm=()=>{
      const [dataUpdate,setDataUpdate]=useState(null);
      const [IsModalUpdateUser, setIsModalUpdateUser] = useState(false);
     useEffect(() => {
-        loadUser();
+    loadUser();
     },[]);
     const loadUser = async () => {
         const res = await getAllUserAPI()
+        console.log("chec res",res);
+        
         if (res.data){
             setDataUsers(res.data)
         }
@@ -47,7 +50,6 @@ const UserMm=()=>{
                   onClick={() => {
                     setDataUpdate(record);
                     setIsModalUpdateUser(true);
-                  
                   }}
                   style={{ cursor: "pointer", color: "#F24333" }}
                 />
@@ -69,9 +71,7 @@ const UserMm=()=>{
       ];
       
     const handleSubmitBtnDelete = async(id) => {
-
         const res = await deleteUserAPi(id);
-
         if (res.data) {
             notification.success({
                 message: "Delete user",

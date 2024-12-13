@@ -1,43 +1,9 @@
 /* eslint-disable react/jsx-key */
-import { Button, Card, Col, ConfigProvider, Divider, Flex, Image, Row, Typography } from "antd";
-
-import { ArrowRightOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
-
-import { getAllCategoriesAPI } from "../../services/api.service";
-
-
+import { Button, Col, ConfigProvider, Divider, Flex, Image, Row, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
+  const navigate = useNavigate();
   const { Title, Text } = Typography;
-  const [categories,setCategories] = useState([]);
-  useEffect (()=>{
-    const loadCategory = async () =>{
-      const res = await getAllCategoriesAPI();
-      if (res.data) {
-      setCategories (res.data)
-      }
-    };
-    loadCategory()
-    },[])
-  const getImageSrc = (courseName) => {
-    if (courseName.includes("ngoai-ngu")) {
-      return "src/assets/categoriesImg/5.jpeg";
-    } else if (courseName.includes("lap-trinh")) {
-      return "src/assets/categoriesImg/1.jpeg";
-    } 
-    else if (courseName.includes("kinh-doanh")) {
-      return "src/assets/categoriesImg/2.jpeg";
-    }
-    else if (courseName.includes("ky-nang-mem")) {
-      return "src/assets/categoriesImg/4.jpeg";
-    }
-    else if (courseName.includes("nghe-thuat")) {
-      return "src/assets/categoriesImg/3.jpeg";
-    }
-   else {
-      return "src/assets/unnamed (5).webp";
-    }
-  };
   return (
       <Flex justify="center" vertical gap={70} style={{paddingTop:"60px"}}>
         <Row align={"middle"} justify={"center"} style={{textAlign:"center"}}>
@@ -62,7 +28,7 @@ const HomePage = () => {
                     },
                   },
                 }}>
-                <Button>Get Started</Button>
+                <Button onClick={() => navigate("/programs")}>Get Started</Button>
               </ConfigProvider>
             </div>
           </Col>
@@ -113,28 +79,7 @@ const HomePage = () => {
             </Col>
         </Row>
         <Divider plain> Popular Study Programs</Divider>
-        <Row wrap gutter={[16, 16]} style={{margin:"0 120px"}}>
-        {categories.length > 0 ? (
-          categories.map((item, index) => (
-            <Col xs={12} md={6} key={index}>
-              <Card 
-                hoverable 
-                style={{ width: "100%" }} 
-                cover={<img alt="example" src={getImageSrc(item.cat_slug)} />}
-              >
-                <Card.Meta 
-                  title={<Typography.Title level={5}>{item.cat_title}</Typography.Title>} 
-                  description={<ArrowRightOutlined/>} 
-                />
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <Typography.Text>No programs available</Typography.Text>
-        )}
-        </Row>
       </Flex>
-   
   );
 };
 export { HomePage };

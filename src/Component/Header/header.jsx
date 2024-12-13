@@ -2,8 +2,10 @@ import { LoginOutlined, LogoutOutlined, } from "@ant-design/icons";
 import { Button, Col, ConfigProvider, Image, Menu, message, Row} from "antd";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { logoutAPI } from "../../services/api.service";
+
 import { AuthContext } from "../context/auth.context";
+import { logoutAPI } from "../../services/api/auth.api";
+
 
 
 
@@ -47,13 +49,13 @@ const HeaderMenu = () => {
   const menuItems = [
     {
       label: (
-          <Image
-            src="./src/assets/logo.png"
-            preview={{ visible: false, movable: false, mask: false }}
-            width={80}
-            height={38}
-            style={{position:"sticky", top:"0px"}}
-          />
+        <Image
+          src="./src/assets/logo.png"
+          preview={{ visible: false, movable: false, mask: false }}
+          width={80}
+          height={38}
+          style={{ position: "sticky", top: "0px" }}
+        />
       ),
       key: "logo", // Không chọn được
       disabled: true,
@@ -75,9 +77,14 @@ const HeaderMenu = () => {
       key: "about",
     },
     user.id && {
-        label: <Link to="/learning">Học Tập</Link>,
-        key: "learning",
-      },
+      label: <Link to="/learning">Learning</Link>,
+      key: "learning",
+    },
+    // Thêm cột Admin khi role_id === 1
+    user.role_id === 1 && {
+      label: <Link to="/admin">Admin</Link>,
+      key: "admin",
+    },
     {
       label: user.id ? (
         <Button
@@ -101,9 +108,10 @@ const HeaderMenu = () => {
       key: "auth",
     },
   ];
+  
   return (
     <Row justify="center" align="middle" style={{ position: "sticky", top: 0, zIndex: 1, backgroundColor: "#fff" ,}}>
-      <Col span={9}>
+      <Col span={10}>
         <ConfigProvider
           theme={{
             components: {

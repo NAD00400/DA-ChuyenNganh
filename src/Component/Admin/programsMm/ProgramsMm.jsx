@@ -1,9 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ConfigProvider, Flex, notification, Popconfirm, Space, Table } from "antd";
 import { useEffect, useState } from "react";
-import { deleteProgram, getAllPrograms } from "../../../services/api.service";
+
 import { ProgramUpdate } from "./programUpdate";
 import { ProgramCreate } from "./ProgramCreate";
+import { deleteProgram, getAllPrograms } from "../../../services/api/programs.api";
 
 
 
@@ -37,7 +38,7 @@ const ProgramsMm=()=>{
     {
       title: 'Categories',
       key: 'cat_id',
-      dataIndex: "course_category.cat_id",
+      dataIndex: ['course_category','cat_id'],
     },
     {
       title: 'Type',
@@ -45,9 +46,9 @@ const ProgramsMm=()=>{
       dataIndex: 'type_id',
       render: (type_id) => {
         return type_id === 1 ? (
-          <span style={{ color: 'green', fontWeight: 'bold' }}>Trả phí</span>
+          <span >Trả phí</span>
         ) : (
-          <span style={{ color: 'blue', fontWeight: 'bold' }}>Miễn Phí</span>
+          <span >Miễn Phí</span>
         );
       },
     },
@@ -55,7 +56,6 @@ const ProgramsMm=()=>{
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
-
     },
     {
       title: 'Action',
@@ -104,14 +104,14 @@ const ProgramsMm=()=>{
     const res = await deleteProgram(id);
     if (res.data) {
         notification.success({
-            message: "Delete user",
-            description: "Xóa user thành công"
+            message: "Delete Program",
+            description: "Xóa Chương trình học thành công"
         })
         await loadPrograms();
 
     } else {
         notification.error({
-            message: "Error delete user",
+            message: "Error delete Program",
             description: JSON.stringify(res.message)
         })
     }
@@ -136,7 +136,7 @@ const ProgramsMm=()=>{
         </ConfigProvider></Flex>  
         
         <Table columns={columns} dataSource={dataPrograms} style={{width:"100%"}} rowKey={(record) => record.course_id} pagination={{
-        pageSize: 7, // Số hàng tối đa trên mỗi trang
+        pageSize: 10, // Số hàng tối đa trên mỗi trang
         }}/>
         
         <ProgramUpdate

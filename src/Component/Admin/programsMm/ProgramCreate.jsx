@@ -1,7 +1,9 @@
 import { Button, ConfigProvider, Form, Input, InputNumber, Modal, notification, Select, Upload } from "antd";
 import {  useEffect, useState,} from "react";
-import { createProgramApi, getAllCategoriesAPI  } from "../../../services/api.service";
+
 import { UploadOutlined } from "@ant-design/icons";
+import { getAllCategoriesAPI } from "../../../services/api/categories.api";
+import { createProgramApi } from "../../../services/api/programs.api";
 
 
 const ProgramCreate = (props) => {
